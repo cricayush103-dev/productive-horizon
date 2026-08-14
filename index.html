@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productive Horizon</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">PH</div>
+            <div>
+                <h2>Productive</h2>
+                <span>Horizon</span>
+            </div>
+        </div>
+
+        <nav>
+
+            <p class="nav-title">WORKSPACE</p>
+
+            <a href="#" class="nav-item active">
+                <i class="fa-solid fa-chart-pie"></i>
+                Dashboard
+            </a>
+
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-list-check"></i>
+                Tasks
+            </a>
+
+            <a href="subjects.html" class="nav-item">
+    <i class="fa-solid fa-book"></i>
+    Subjects
+</a>
+
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-calendar"></i>
+                Planner
+            </a>
+
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-clock"></i>
+                Study Timer
+            </a>
+
+            <p class="nav-title">PROGRESS</p>
+
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-chart-line"></i>
+                Analytics
+            </a>
+
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-rotate"></i>
+                Revisions
+            </a>
+
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                Weak Topics
+            </a>
+
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-book-open"></i>
+                Journal
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="#" class="nav-item">
+                <i class="fa-solid fa-gear"></i>
+                Settings
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN AREA -->
+    <main class="main">
+
+        <!-- HEADER -->
+        <header>
+
+            <div>
+                <p class="small-text">SATURDAY, AUGUST 15</p>
+                <h1>Good Morning 👋</h1>
+                <p class="subtitle">
+                    Let's make today productive.
+                </p>
+            </div>
+
+            <div class="header-actions">
+
+    <div class="user-account">
+
+        <div class="user-details">
+
+            <span id="userEmail">
+                Loading...
+            </span>
+
+        </div>
+
+        <button
+            id="logoutButton"
+            class="logout-button"
+            type="button"
+        >
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </button>
+
+    </div>
+
+    <button
+        id="themeButton"
+        class="icon-button"
+        type="button"
+    >
+        🌙
+    </button>
+
+    <div class="profile">
+        A
+    </div>
+
+</div>
+        </header>
+
+
+        <!-- EXAM COUNTDOWN -->
+        <section class="exam-card">
+
+            <div>
+                <p>🎯 DSSSB TGT COMPUTER SCIENCE</p>
+                <h2>Exam Countdown</h2>
+            </div>
+
+            <div class="countdown">
+                <strong id="examDays">--</strong>
+                <span>DAYS TO GO</span>
+            </div>
+
+        </section>
+
+
+        <!-- STATS -->
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon">🔥</div>
+                <p>Current Streak</p>
+                <h2>0 Days</h2>
+                <span>Keep showing up</span>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">⏱️</div>
+                <p>Study Today</p>
+                <h2>0h 00m</h2>
+                <span>Goal: 8 hours</span>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <p>Target Completion</p>
+                <h2>0%</h2>
+                <span>0 of 0 tasks</span>
+            </div>
+
+            <div class="stat-card highlight">
+                <div class="stat-icon">⭐</div>
+                <p>Productivity</p>
+                <h2>0.0 / 10</h2>
+                <span>Today's score</span>
+            </div>
+
+        </section>
+
+
+        <!-- MAIN CHARTS -->
+        <section class="chart-grid">
+
+            <div class="panel large-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3>Productivity Trend</h3>
+                        <p>Your consistency over the last 7 days</p>
+                    </div>
+
+                    <button class="filter-button">
+                        Last 7 Days
+                    </button>
+
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="productivityChart"></canvas>
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3>Subject Distribution</h3>
+                        <p>Study time by subject</p>
+                    </div>
+
+                </div>
+
+                <div class="small-chart-container">
+                    <canvas id="subjectChart"></canvas>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SECOND ROW -->
+        <section class="bottom-grid">
+
+            <!-- TODAY TASKS -->
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3>Today's Tasks</h3>
+                        <p>Stay focused on today's priorities</p>
+                    </div>
+
+                    <button id="addTaskButton" class="primary-button">
+                        + Add Task
+                    </button>
+
+                </div>
+
+                <div id="taskList" class="task-list">
+
+                    <div class="empty-state">
+                        <div>📋</div>
+                        <h4>No tasks yet</h4>
+                        <p>Add your first task for today.</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SUBJECT PROGRESS -->
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3>Subject Progress</h3>
+                        <p>Overall syllabus completion</p>
+                    </div>
+
+                </div>
+
+                <div class="subject-progress">
+
+                    <div class="progress-item">
+
+                        <div class="progress-info">
+                            <span>Section A</span>
+                            <strong>0%</strong>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width:0%"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-item">
+
+                        <div class="progress-info">
+                            <span>Section B</span>
+                            <strong>0%</strong>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width:0%"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ADD TASK MODAL -->
+<div id="taskModal" class="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <div>
+                <h2>Add New Task</h2>
+                <p>Plan what you want to accomplish.</p>
+            </div>
+
+            <button id="closeModal">×</button>
+
+        </div>
+
+        <form id="taskForm">
+
+            <label>Task Name</label>
+
+            <input
+                type="text"
+                id="taskName"
+                placeholder="Example: English Article Lecture"
+                required
+            >
+
+
+            <label>Subject</label>
+
+            <select id="taskSubject">
+
+                <option>General Awareness</option>
+                <option>Reasoning</option>
+                <option>Mathematics</option>
+                <option>Hindi</option>
+                <option>English</option>
+                <option>Computer Systems</option>
+                <option>Computer Architecture</option>
+                <option>Operating Systems</option>
+                <option>Programming</option>
+                <option>Python</option>
+                <option>Computer Networks</option>
+                <option>DBMS</option>
+                <option>Web Technologies</option>
+                <option>Pandas</option>
+                <option>Emerging Trends</option>
+                <option>Society, Law & Ethics</option>
+                <option>Teaching Methodology</option>
+
+            </select>
+
+
+            <div class="form-row">
+
+                <div>
+                    <label>Planned Minutes</label>
+                    <input
+                        type="number"
+                        id="plannedMinutes"
+                        placeholder="90"
+                    >
+                </div>
+
+                <div>
+                    <label>Priority</label>
+
+                    <select id="taskPriority">
+                        <option>Medium</option>
+                        <option>High</option>
+                        <option>Low</option>
+                    </select>
+
+                </div>
+
+            </div>
+
+            <button class="save-button" type="submit">
+                Add Task
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- Supabase Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Supabase Connection -->
+<script src="supabase.js"></script>
+
+<!-- Page Protection -->
+<script src="protected.js"></script>
+
+<!-- Dashboard JavaScript -->
+<script src="app.js"></script>
+
+</body>
+</html>
