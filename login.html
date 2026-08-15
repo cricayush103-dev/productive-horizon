@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -9,14 +10,17 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Login | Productive Horizon</title>
+    <title>
+        Login | Productive Horizon
+    </title>
 
-    <!-- Existing main stylesheet -->
-    <link rel="stylesheet" href="style.css">
 
-    <!-- =========================================
-         LOGIN PAGE STYLING
-    ========================================== -->
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+
     <style>
 
         * {
@@ -25,17 +29,17 @@
             padding: 0;
         }
 
+
         html,
         body {
             width: 100%;
             min-height: 100%;
         }
 
+
         body {
-            margin: 0;
 
             font-family:
-                Inter,
                 -apple-system,
                 BlinkMacSystemFont,
                 "Segoe UI",
@@ -44,13 +48,10 @@
                 sans-serif;
 
             background: #f5f6fb;
+
             color: #111318;
         }
 
-
-        /* =========================================
-           LOGIN PAGE
-        ========================================== */
 
         .login-page {
 
@@ -63,23 +64,32 @@
             padding: 24px;
 
             background:
+
                 radial-gradient(
                     circle at 15% 15%,
-                    rgba(108, 99, 255, 0.12),
+                    rgba(
+                        108,
+                        99,
+                        255,
+                        0.12
+                    ),
                     transparent 32%
                 ),
+
                 radial-gradient(
                     circle at 85% 85%,
-                    rgba(80, 170, 255, 0.08),
+                    rgba(
+                        80,
+                        170,
+                        255,
+                        0.08
+                    ),
                     transparent 30%
                 ),
+
                 #f5f6fb;
         }
 
-
-        /* =========================================
-           LOGIN CARD
-        ========================================== */
 
         .login-card {
 
@@ -88,21 +98,26 @@
 
             background: #ffffff;
 
-            border: 1px solid #e4e5eb;
+            border:
+                1px solid
+                #e4e5eb;
 
-            border-radius: 24px;
+            border-radius:
+                24px;
 
-            padding: 38px;
+            padding:
+                38px;
 
             box-shadow:
                 0 20px 60px
-                rgba(0, 0, 0, 0.08);
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.08
+                );
         }
 
-
-        /* =========================================
-           LOGO
-        ========================================== */
 
         .login-logo {
 
@@ -113,228 +128,281 @@
             align-items: center;
             justify-content: center;
 
-            background: #17181d;
-            color: #ffffff;
+            background:
+                #17181d;
 
-            border-radius: 15px;
+            color:
+                #ffffff;
 
-            font-size: 15px;
-            font-weight: 700;
+            border-radius:
+                15px;
 
-            letter-spacing: 0.5px;
+            font-size:
+                15px;
 
-            margin-bottom: 25px;
+            font-weight:
+                700;
+
+            margin-bottom:
+                25px;
         }
 
 
-        /* =========================================
-           TITLE
-        ========================================== */
-
         .login-card h1 {
 
-            margin: 0 0 8px;
+            font-size:
+                28px;
 
-            font-size: 28px;
-            line-height: 1.2;
-
-            font-weight: 700;
-
-            color: #111318;
+            margin-bottom:
+                8px;
         }
 
 
         .login-subtitle {
 
-            margin: 0 0 28px;
+            color:
+                #777985;
 
-            color: #777985;
+            font-size:
+                14px;
 
-            font-size: 14px;
-            line-height: 1.6;
+            line-height:
+                1.6;
+
+            margin-bottom:
+                20px;
         }
 
 
-        /* =========================================
-           FORM
-        ========================================== */
+        .connection-status {
 
-        .login-card form {
-            width: 100%;
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                7px;
+
+            font-size:
+                11px;
+
+            padding:
+                7px 10px;
+
+            border-radius:
+                20px;
+
+            margin-bottom:
+                10px;
+        }
+
+
+        .status-loading {
+
+            background:
+                #f2f2f6;
+
+            color:
+                #777985;
+        }
+
+
+        .status-ready {
+
+            background:
+                #eaf8ef;
+
+            color:
+                #198754;
+        }
+
+
+        .status-error {
+
+            background:
+                #ffecec;
+
+            color:
+                #dc3545;
         }
 
 
         .login-card label {
 
-            display: block;
+            display:
+                block;
 
-            margin-top: 17px;
-            margin-bottom: 8px;
+            margin-top:
+                17px;
 
-            color: #34363d;
+            margin-bottom:
+                8px;
 
-            font-size: 13px;
-            font-weight: 600;
+            font-size:
+                13px;
+
+            font-weight:
+                600;
         }
 
-
-        /* =========================================
-           INPUTS
-        ========================================== */
 
         .login-card input {
 
-            display: block;
+            display:
+                block;
 
-            width: 100%;
-            height: 48px;
+            width:
+                100%;
 
-            padding: 0 14px;
+            height:
+                48px;
 
-            border: 1px solid #dedfe6;
+            padding:
+                0 14px;
 
-            border-radius: 11px;
+            border:
+                1px solid
+                #dedfe6;
 
-            background: #fafafd;
+            border-radius:
+                11px;
 
-            color: #111318;
+            background:
+                #fafafd;
 
-            font-size: 14px;
+            color:
+                #111318;
 
-            outline: none;
+            font-size:
+                14px;
 
-            transition:
-                border-color 0.2s ease,
-                box-shadow 0.2s ease,
-                background 0.2s ease;
-        }
-
-
-        .login-card input::placeholder {
-            color: #a0a2aa;
+            outline:
+                none;
         }
 
 
         .login-card input:focus {
 
-            border-color: #6c63ff;
+            border-color:
+                #6c63ff;
 
-            background: #ffffff;
+            background:
+                white;
 
             box-shadow:
                 0 0 0 3px
-                rgba(108, 99, 255, 0.10);
+                rgba(
+                    108,
+                    99,
+                    255,
+                    0.10
+                );
         }
 
-
-        /* =========================================
-           SIGN IN BUTTON
-        ========================================== */
 
         .login-button {
 
-            display: block;
+            display:
+                block;
 
-            width: 100%;
-            height: 48px;
+            width:
+                100%;
 
-            margin-top: 25px;
+            height:
+                48px;
 
-            border: none;
+            margin-top:
+                25px;
 
-            border-radius: 11px;
+            border:
+                none;
 
-            background: #17181d;
+            border-radius:
+                11px;
 
-            color: #ffffff;
+            background:
+                #17181d;
 
-            font-size: 14px;
-            font-weight: 600;
+            color:
+                white;
 
-            cursor: pointer;
+            font-size:
+                14px;
 
-            transition:
-                transform 0.15s ease,
-                opacity 0.15s ease,
-                box-shadow 0.15s ease;
-        }
+            font-weight:
+                600;
 
-
-        .login-button:hover {
-
-            opacity: 0.92;
-
-            box-shadow:
-                0 8px 20px
-                rgba(0, 0, 0, 0.12);
-        }
-
-
-        .login-button:active {
-            transform: scale(0.99);
+            cursor:
+                pointer;
         }
 
 
         .login-button:disabled {
 
-            opacity: 0.6;
+            opacity:
+                0.6;
 
-            cursor: not-allowed;
-
-            box-shadow: none;
+            cursor:
+                not-allowed;
         }
 
 
-        /* =========================================
-           LOGIN MESSAGE
-        ========================================== */
-
         .login-message {
 
-            min-height: 18px;
+            min-height:
+                18px;
 
-            margin-top: 17px;
+            margin-top:
+                17px;
 
-            text-align: center;
+            text-align:
+                center;
 
-            font-size: 13px;
-            line-height: 1.4;
+            font-size:
+                13px;
+
+            line-height:
+                1.4;
         }
 
 
         .error-message {
-            color: #dc3545;
+            color:
+                #dc3545;
         }
 
 
         .success-message {
-            color: #198754;
+            color:
+                #198754;
         }
 
 
-        /* =========================================
-           SMALL SCREEN / IPAD / MOBILE
-        ========================================== */
-
-        @media (max-width: 500px) {
+        @media (
+            max-width: 500px
+        ) {
 
             .login-page {
-                padding: 18px;
+                padding:
+                    18px;
             }
+
 
             .login-card {
 
-                padding: 28px 22px;
+                padding:
+                    28px 22px;
 
-                border-radius: 20px;
+                border-radius:
+                    20px;
             }
+
 
             .login-card h1 {
-                font-size: 24px;
-            }
-
-            .login-subtitle {
-                font-size: 13px;
+                font-size:
+                    24px;
             }
 
         }
@@ -342,10 +410,15 @@
     </style>
 
 
-    <!-- Supabase JavaScript Library -->
+    <!-- PRIMARY CDN -->
+
     <script
-        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-    </script>
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+        onerror="
+            this.onerror=null;
+            this.src='https://unpkg.com/@supabase/supabase-js@2';
+        "
+    ></script>
 
 </head>
 
@@ -353,24 +426,16 @@
 <body>
 
 
-    <!-- =========================================
-         PRODUCTIVE HORIZON LOGIN
-    ========================================== -->
-
     <main class="login-page">
 
 
         <section class="login-card">
 
 
-            <!-- LOGO -->
-
             <div class="login-logo">
                 PH
             </div>
 
-
-            <!-- TITLE -->
 
             <h1>
                 Productive Horizon
@@ -382,12 +447,19 @@
             </p>
 
 
-            <!-- LOGIN FORM -->
+            <div
+                id="loginStatus"
+                class="
+                    connection-status
+                    status-loading
+                "
+            >
+                Checking secure connection...
+            </div>
+
 
             <form id="loginForm">
 
-
-                <!-- EMAIL -->
 
                 <label for="loginEmail">
                     Email
@@ -403,8 +475,6 @@
                 >
 
 
-                <!-- PASSWORD -->
-
                 <label for="loginPassword">
                     Password
                 </label>
@@ -419,8 +489,6 @@
                 >
 
 
-                <!-- LOGIN BUTTON -->
-
                 <button
                     type="submit"
                     class="login-button"
@@ -432,8 +500,6 @@
 
             </form>
 
-
-            <!-- ERROR / SUCCESS MESSAGE -->
 
             <p
                 id="loginMessage"
@@ -448,14 +514,8 @@
     </main>
 
 
-    <!-- =========================================
-         JAVASCRIPT
-    ========================================== -->
-
-    <!-- Our Supabase configuration -->
     <script src="supabase.js"></script>
 
-    <!-- Login authentication -->
     <script src="auth.js"></script>
 
 
