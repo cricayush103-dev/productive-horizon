@@ -1,336 +1,181 @@
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Planner | Productive Horizon</title>
-
-    <link rel="stylesheet" href="style.css">
-
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    >
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Planner | Productive Horizon</title>
+<link href="style.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
 </head>
-
 <body>
-
 <div class="app">
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-
-        <div class="logo">
-
-            <div class="logo-icon">
+<!-- SIDEBAR -->
+<aside class="sidebar">
+<div class="logo">
+<div class="logo-icon">
                 PH
             </div>
-
-            <div>
-                <h2>Productive</h2>
-                <span>Horizon</span>
-            </div>
-
-        </div>
-
-
-        <nav>
-
-            <p class="nav-title">
+<div>
+<h2>Productive</h2>
+<span>Horizon</span>
+</div>
+</div>
+<nav>
+<p class="nav-title">
                 WORKSPACE
             </p>
-
-            <a
-                href="index.html"
-                class="nav-item"
-            >
-                <i class="fa-solid fa-chart-pie"></i>
+<a class="nav-item" href="index.html">
+<i class="fa-solid fa-chart-pie"></i>
                 Dashboard
             </a>
-
-
-            <a
-                href="index.html#tasks"
-                class="nav-item"
-            >
-                <i class="fa-solid fa-list-check"></i>
+<a class="nav-item" href="index.html#tasks">
+<i class="fa-solid fa-list-check"></i>
                 Tasks
             </a>
-
-
-            <a
-                href="subjects.html"
-                class="nav-item"
-            >
-                <i class="fa-solid fa-book"></i>
+<a class="nav-item" href="subjects.html">
+<i class="fa-solid fa-book"></i>
                 Subjects
             </a>
-
-
-            <a
-                href="planner.html"
-                class="nav-item active"
-            >
-                <i class="fa-solid fa-calendar"></i>
+<a class="nav-item active" href="planner.html">
+<i class="fa-solid fa-calendar"></i>
                 Planner
             </a>
-
-
-            <a
-                href="#"
-                class="nav-item"
-            >
-                <i class="fa-solid fa-clock"></i>
+<a class="nav-item" href="timer.html">
+<i class="fa-solid fa-clock"></i>
                 Study Timer
             </a>
-
-
-            <p class="nav-title">
+<p class="nav-title">
                 PROGRESS
             </p>
-
-
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-chart-line"></i>
+<a class="nav-item" href="analytics.html">
+<i class="fa-solid fa-chart-line"></i>
                 Analytics
             </a>
-
-
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-rotate"></i>
+<a class="nav-item" href="revisions.html">
+<i class="fa-solid fa-rotate"></i>
                 Revisions
             </a>
-
-
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-triangle-exclamation"></i>
+<a class="nav-item" href="weak-topics.html">
+<i class="fa-solid fa-triangle-exclamation"></i>
                 Weak Topics
             </a>
-
-
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-book-open"></i>
+<a class="nav-item" href="journal.html">
+<i class="fa-solid fa-book-open"></i>
                 Journal
             </a>
-
-        </nav>
-
-
-        <div class="sidebar-bottom">
-
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-gear"></i>
+</nav>
+<div class="sidebar-bottom">
+<a class="nav-item" href="settings.html">
+<i class="fa-solid fa-gear"></i>
                 Settings
             </a>
-
-        </div>
-
-    </aside>
-
-
-    <!-- MAIN -->
-    <main class="main">
-
-        <header>
-
-            <div>
-
-                <p class="small-text">
+</div>
+</aside>
+<!-- MAIN -->
+<main class="main">
+<header>
+<div>
+<p class="small-text">
                     STUDY PLANNER
                 </p>
-
-                <h1>
+<h1>
                     Planner 📅
                 </h1>
-
-                <p class="subtitle">
+<p class="subtitle">
                     Plan tasks by date and stay on track.
                 </p>
-
-            </div>
-
-
-            <div class="header-actions">
-
-                <button
-                    id="plannerThemeButton"
-                    class="icon-button"
-                    type="button"
-                >
+</div>
+<div class="header-actions">
+<button class="icon-button" id="plannerThemeButton" type="button">
                     🌙
                 </button>
-
-            </div>
-
-        </header>
-
-
-        <!-- DATE CONTROLS -->
-
-        <section class="planner-toolbar">
-
-            <button
-                id="previousDayButton"
-                class="secondary-button"
-            >
+</div>
+</header>
+<!-- DATE CONTROLS -->
+<section class="planner-toolbar">
+<button class="secondary-button" id="previousDayButton">
                 ← Previous
             </button>
-
-
-            <input
-                type="date"
-                id="plannerDate"
-                class="planner-date-input"
-            >
-
-
-            <button
-                id="todayButton"
-                class="secondary-button"
-            >
+<input class="planner-date-input" id="plannerDate" type="date"/>
+<button class="secondary-button" id="todayButton">
                 Today
             </button>
-
-
-            <button
-                id="nextDayButton"
-                class="secondary-button"
-            >
+<button class="secondary-button" id="nextDayButton">
                 Next →
             </button>
-
-        </section>
-
-
-        <!-- SUMMARY -->
-
-        <section class="stats-grid">
-
-            <div class="stat-card">
-
-                <div class="stat-icon">
+</section>
+<!-- SUMMARY -->
+<section class="stats-grid">
+<div class="stat-card">
+<div class="stat-icon">
                     📋
                 </div>
-
-                <p>Total Tasks</p>
-
-                <h2 id="plannerTotal">
+<p>Total Tasks</p>
+<h2 id="plannerTotal">
                     0
                 </h2>
-
-                <span>
+<span>
                     Planned for selected day
                 </span>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-icon">
+</div>
+<div class="stat-card">
+<div class="stat-icon">
                     ✅
                 </div>
-
-                <p>Completed</p>
-
-                <h2 id="plannerCompleted">
+<p>Completed</p>
+<h2 id="plannerCompleted">
                     0
                 </h2>
-
-                <span>
+<span>
                     Finished tasks
                 </span>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-icon">
+</div>
+<div class="stat-card">
+<div class="stat-icon">
                     ⏳
                 </div>
-
-                <p>Pending</p>
-
-                <h2 id="plannerPending">
+<p>Pending</p>
+<h2 id="plannerPending">
                     0
                 </h2>
-
-                <span>
+<span>
                     Still to complete
                 </span>
-
-            </div>
-
-
-            <div class="stat-card highlight">
-
-                <div class="stat-icon">
+</div>
+<div class="stat-card highlight">
+<div class="stat-icon">
                     ⏱️
                 </div>
-
-                <p>Planned Time</p>
-
-                <h2 id="plannerMinutes">
+<p>Planned Time</p>
+<h2 id="plannerMinutes">
                     0m
                 </h2>
-
-                <span>
+<span>
                     Total planned study
                 </span>
-
-            </div>
-
-        </section>
-
-
-        <!-- TASKS -->
-
-        <section class="panel planner-panel">
-
-            <div class="panel-header">
-
-                <div>
-
-                    <h3 id="plannerHeading">
+</div>
+</section>
+<!-- TASKS -->
+<section class="panel planner-panel">
+<div class="panel-header">
+<div>
+<h3 id="plannerHeading">
                         Tasks
                     </h3>
-
-                    <p>
+<p>
                         Tasks scheduled for this date
                     </p>
-
-                </div>
-
-            </div>
-
-
-            <div
-                id="plannerTaskList"
-                class="planner-task-list"
-            >
-            </div>
-
-        </section>
-
-    </main>
-
 </div>
-
-
+</div>
+<div class="planner-task-list" id="plannerTaskList">
+</div>
+</section>
+</main>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script src="supabase.js"></script>
-
 <script src="protected.js"></script>
-
 <script src="planner.js"></script>
-
 </body>
 </html>

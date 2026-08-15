@@ -1,357 +1,187 @@
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Subjects | Productive Horizon</title>
-
-    <link rel="stylesheet" href="style.css">
-
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    >
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Subjects | Productive Horizon</title>
+<link href="style.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
 </head>
-
 <body>
-
 <div class="app">
-
-    <!-- SIDEBAR -->
-
-    <aside class="sidebar">
-
-        <div class="logo">
-
-            <div class="logo-icon">
+<!-- SIDEBAR -->
+<aside class="sidebar">
+<div class="logo">
+<div class="logo-icon">
                 PH
             </div>
-
-            <div>
-                <h2>Productive</h2>
-                <span>Horizon</span>
-            </div>
-
-        </div>
-
-
-        <nav>
-
-            <p class="nav-title">
+<div>
+<h2>Productive</h2>
+<span>Horizon</span>
+</div>
+</div>
+<nav>
+<p class="nav-title">
                 WORKSPACE
             </p>
-
-            <a
-                href="index.html"
-                class="nav-item"
-            >
-                <i class="fa-solid fa-chart-pie"></i>
+<a class="nav-item" href="index.html">
+<i class="fa-solid fa-chart-pie"></i>
                 Dashboard
             </a>
-
-
-            <a
-                href="#"
-                class="nav-item"
-            >
-                <i class="fa-solid fa-list-check"></i>
+<a class="nav-item" href="index.html#tasks">
+<i class="fa-solid fa-list-check"></i>
                 Tasks
             </a>
-
-
-            <a
-                href="subjects.html"
-                class="nav-item active"
-            >
-                <i class="fa-solid fa-book"></i>
+<a class="nav-item active" href="subjects.html">
+<i class="fa-solid fa-book"></i>
                 Subjects
             </a>
-
-
-           <a href="planner.html" class="nav-item">
-    <i class="fa-solid fa-calendar"></i>
+<a class="nav-item" href="planner.html">
+<i class="fa-solid fa-calendar"></i>
     Planner
 </a>
-
-
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-clock"></i>
+<a class="nav-item" href="timer.html">
+<i class="fa-solid fa-clock"></i>
                 Study Timer
             </a>
-
-
-            <p class="nav-title">
+<p class="nav-title">
                 PROGRESS
             </p>
-
-
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-chart-line"></i>
+<a class="nav-item" href="analytics.html">
+<i class="fa-solid fa-chart-line"></i>
                 Analytics
             </a>
-
-
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-rotate"></i>
+<a class="nav-item" href="revisions.html">
+<i class="fa-solid fa-rotate"></i>
                 Revisions
             </a>
-
-
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-triangle-exclamation"></i>
+<a class="nav-item" href="weak-topics.html">
+<i class="fa-solid fa-triangle-exclamation"></i>
                 Weak Topics
             </a>
-
-
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-book-open"></i>
+<a class="nav-item" href="journal.html">
+<i class="fa-solid fa-book-open"></i>
                 Journal
             </a>
-
-        </nav>
-
-
-        <div class="sidebar-bottom">
-
-            <a href="#" class="nav-item">
-                <i class="fa-solid fa-gear"></i>
+</nav>
+<div class="sidebar-bottom">
+<a class="nav-item" href="settings.html">
+<i class="fa-solid fa-gear"></i>
                 Settings
             </a>
-
-        </div>
-
-    </aside>
-
-
-    <!-- MAIN -->
-
-    <main class="main">
-
-        <header>
-
-            <div>
-
-                <p class="small-text">
+</div>
+</aside>
+<!-- MAIN -->
+<main class="main">
+<header>
+<div>
+<p class="small-text">
                     SYLLABUS MANAGEMENT
                 </p>
-
-                <h1>
-                    Subjects & Topics 📚
+<h1>
+                    Subjects &amp; Topics 📚
                 </h1>
-
-                <p class="subtitle">
+<p class="subtitle">
                     Manage your complete study structure.
                 </p>
-
-            </div>
-
-
-            <div class="header-actions">
-
-                <button
-                    id="subjectThemeButton"
-                    class="icon-button"
-                >
+</div>
+<div class="header-actions">
+<button class="icon-button" id="subjectThemeButton">
                     🌙
                 </button>
-
-            </div>
-
-        </header>
-
-
-        <!-- TOP SUMMARY -->
-
-        <section class="subject-summary-grid">
-
-            <div class="stat-card">
-
-                <p>Total Subjects</p>
-
-                <h2 id="totalSubjects">
+</div>
+</header>
+<!-- TOP SUMMARY -->
+<section class="subject-summary-grid">
+<div class="stat-card">
+<p>Total Subjects</p>
+<h2 id="totalSubjects">
                     0
                 </h2>
-
-                <span>Across all sections</span>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <p>Total Topics</p>
-
-                <h2 id="totalTopics">
+<span>Across all sections</span>
+</div>
+<div class="stat-card">
+<p>Total Topics</p>
+<h2 id="totalTopics">
                     0
                 </h2>
-
-                <span>Your syllabus topics</span>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <p>Total Subtopics</p>
-
-                <h2 id="totalSubtopics">
+<span>Your syllabus topics</span>
+</div>
+<div class="stat-card">
+<p>Total Subtopics</p>
+<h2 id="totalSubtopics">
                     0
                 </h2>
-
-                <span>Detailed learning areas</span>
-
-            </div>
-
-
-            <div class="stat-card highlight">
-
-                <p>Syllabus Progress</p>
-
-                <h2 id="overallProgress">
+<span>Detailed learning areas</span>
+</div>
+<div class="stat-card highlight">
+<p>Syllabus Progress</p>
+<h2 id="overallProgress">
                     0%
                 </h2>
-
-                <span>Overall completion</span>
-
-            </div>
-
-        </section>
-
-
-        <!-- ACTIONS -->
-
-        <section class="subject-toolbar">
-
-            <div>
-
-                <h2>
+<span>Overall completion</span>
+</div>
+</section>
+<!-- ACTIONS -->
+<section class="subject-toolbar">
+<div>
+<h2>
                     My Subjects
                 </h2>
-
-                <p>
+<p>
                     Add, edit and organize your syllabus.
                 </p>
-
-            </div>
-
+</div>
 <div class="subject-toolbar-buttons">
-
-    <button
-        id="addSectionButton"
-        class="secondary-button"
-        type="button"
-    >
+<button class="secondary-button" id="addSectionButton" type="button">
         + Add Section
     </button>
-
-    <button
-        id="addSubjectButton"
-        class="primary-button"
-        type="button"
-    >
+<button class="primary-button" id="addSubjectButton" type="button">
         + Add Subject
     </button>
-
 </div>
-
-        </section>
-
-
-        <!-- SUBJECT DATA -->
-
-        <div id="sectionsContainer"></div>
-
-    </main>
-
+</section>
+<!-- SUBJECT DATA -->
+<div id="sectionsContainer"></div>
+</main>
 </div>
-
-
 <!-- GENERIC MODAL -->
-
-<div
-    id="subjectModal"
-    class="modal"
->
-
-    <div class="modal-box">
-
-        <div class="modal-header">
-
-            <div>
-
-                <h2 id="subjectModalTitle">
+<div class="modal" id="subjectModal">
+<div class="modal-box">
+<div class="modal-header">
+<div>
+<h2 id="subjectModalTitle">
                     Add Subject
                 </h2>
-
-                <p id="subjectModalSubtitle">
+<p id="subjectModalSubtitle">
                     Add something to your syllabus.
                 </p>
-
-            </div>
-
-
-            <button id="closeSubjectModal">
+</div>
+<button id="closeSubjectModal">
                 ×
             </button>
-
-        </div>
-
-
-        <form id="subjectForm">
-
-            <label id="nameLabel">
+</div>
+<form id="subjectForm">
+<label id="nameLabel">
                 Name
             </label>
-
-            <input
-                id="itemName"
-                type="text"
-                placeholder="Enter name"
-                required
-            >
-
-
-            <div
-                id="sectionSelectArea"
-                class="hidden"
-            >
-
-                <label>
+<input id="itemName" placeholder="Enter name" required="" type="text"/>
+<div class="hidden" id="sectionSelectArea">
+<label>
                     Section
                 </label>
-
-                <select id="sectionSelect"></select>
-
-            </div>
-
-
-            <button
-                class="save-button"
-                type="submit"
-            >
+<select id="sectionSelect"></select>
+</div>
+<button class="save-button" type="submit">
                 Save
             </button>
-
-        </form>
-
-    </div>
-
+</form>
 </div>
-
-
+</div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script src="supabase.js"></script>
-
 <script src="protected.js"></script>
-
 <script src="subjects.js"></script>
-
 </body>
 </html>

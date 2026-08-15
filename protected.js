@@ -100,7 +100,7 @@ async function logoutUser() {
     const {
         error
     } =
-    await supabaseClient.auth.signOut();
+    await supabaseClient.auth.signOut({ scope: "local" });
 
 
     if (error) {

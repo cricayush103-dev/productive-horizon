@@ -1,80 +1,73 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
 <title>Study Timer | Productive Horizon</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="modules.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+<link href="style.css" rel="stylesheet"/>
+<link href="modules.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="app">
-
 <aside class="sidebar">
-  <div class="logo"><div class="logo-icon">PH</div><div><h2>Productive</h2><span>Horizon</span></div></div>
-  <nav>
-    <p class="nav-title">WORKSPACE</p>
-    <a href="index.html" class="nav-item"><i class="fa-solid fa-chart-pie"></i>Dashboard</a>
-    <a href="index.html#tasks" class="nav-item"><i class="fa-solid fa-list-check"></i>Tasks</a>
-    <a href="subjects.html" class="nav-item"><i class="fa-solid fa-book"></i>Subjects</a>
-    <a href="planner.html" class="nav-item"><i class="fa-solid fa-calendar"></i>Planner</a>
-    <a href="timer.html" class="nav-item active"><i class="fa-solid fa-clock"></i>Study Timer</a>
-
-    <p class="nav-title">PROGRESS</p>
-    <a href="analytics.html" class="nav-item "><i class="fa-solid fa-chart-line"></i>Analytics</a>
-    <a href="revisions.html" class="nav-item "><i class="fa-solid fa-rotate"></i>Revisions</a>
-    <a href="weak-topics.html" class="nav-item "><i class="fa-solid fa-triangle-exclamation"></i>Weak Topics</a>
-    <a href="journal.html" class="nav-item "><i class="fa-solid fa-book-open"></i>Journal</a>
-  </nav>
-  <div class="sidebar-bottom">
-    <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i>Settings</a>
-  </div>
+<div class="logo"><div class="logo-icon">PH</div><div><h2>Productive</h2><span>Horizon</span></div></div>
+<nav>
+<p class="nav-title">WORKSPACE</p>
+<a class="nav-item" href="index.html"><i class="fa-solid fa-chart-pie"></i>Dashboard</a>
+<a class="nav-item" href="index.html#tasks"><i class="fa-solid fa-list-check"></i>Tasks</a>
+<a class="nav-item" href="subjects.html"><i class="fa-solid fa-book"></i>Subjects</a>
+<a class="nav-item" href="planner.html"><i class="fa-solid fa-calendar"></i>Planner</a>
+<a class="nav-item active" href="timer.html"><i class="fa-solid fa-clock"></i>Study Timer</a>
+<p class="nav-title">PROGRESS</p>
+<a class="nav-item" href="analytics.html"><i class="fa-solid fa-chart-line"></i>Analytics</a>
+<a class="nav-item" href="revisions.html"><i class="fa-solid fa-rotate"></i>Revisions</a>
+<a class="nav-item" href="weak-topics.html"><i class="fa-solid fa-triangle-exclamation"></i>Weak Topics</a>
+<a class="nav-item" href="journal.html"><i class="fa-solid fa-book-open"></i>Journal</a>
+</nav>
+<div class="sidebar-bottom">
+<a class="nav-item" href="settings.html"><i class="fa-solid fa-gear"></i>Settings</a>
+</div>
 </aside>
-
 <main class="main">
 <header>
-  <div><p class="small-text">FOCUS MODE</p><h1>Study Timer ⏱️</h1><p class="subtitle">Track real study time and save every session.</p></div>
-  <div class="header-actions"><button id="moduleThemeButton" class="icon-button" type="button">🌙</button></div>
+<div><p class="small-text">FOCUS MODE</p><h1>Study Timer ⏱️</h1><p class="subtitle">Track real study time and save every session.</p></div>
+<div class="header-actions"><button class="icon-button" id="moduleThemeButton" type="button">🌙</button></div>
 </header>
-
 <section class="module-grid">
-  <div class="module-card"><p>Study Today</p><h2 id="todayMinutes">0m</h2><span class="muted">Saved sessions</span></div>
-  <div class="module-card"><p>Sessions Today</p><h2 id="todaySessions">0</h2><span class="muted">Completed sessions</span></div>
-  <div class="module-card"><p>Current Mode</p><h2 id="modeCard">Stopwatch</h2><span class="muted">Switch anytime</span></div>
-  <div class="module-card"><p>Selected Subject</p><h2 id="subjectCard">—</h2><span class="muted">Session subject</span></div>
+<div class="module-card"><p>Study Today</p><h2 id="todayMinutes">0m</h2><span class="muted">Saved sessions</span></div>
+<div class="module-card"><p>Sessions Today</p><h2 id="todaySessions">0</h2><span class="muted">Completed sessions</span></div>
+<div class="module-card"><p>Current Mode</p><h2 id="modeCard">Stopwatch</h2><span class="muted">Switch anytime</span></div>
+<div class="module-card"><p>Selected Subject</p><h2 id="subjectCard">—</h2><span class="muted">Session subject</span></div>
 </section>
-
 <section class="module-panel timer-shell">
-  <div class="module-toolbar" style="justify-content:center">
-    <select id="timerSubject" class="module-select" style="max-width:320px"></select>
-    <select id="timerType" class="module-select" style="max-width:220px">
-      <option value="Stopwatch">Stopwatch</option>
-      <option value="Pomodoro">Pomodoro</option>
-    </select>
-  </div>
-  <div class="timer-mode" id="timerModeLabel">STOPWATCH</div>
-  <div class="timer-display" id="timerDisplay">00:00:00</div>
-  <div class="timer-progress"><div id="timerProgress"></div></div>
-  <div class="timer-controls">
-    <button id="startTimer" class="module-btn primary">Start</button>
-    <button id="pauseTimer" class="module-btn">Pause</button>
-    <button id="resetTimer" class="module-btn">Reset</button>
-    <button id="saveTimer" class="module-btn">Save Session</button>
-  </div>
-  <div class="timer-settings">
-    <div><label class="module-label">Pomodoro Study (min)</label><input id="pomodoroStudy" class="module-input" type="number" value="25" min="1"></div>
-    <div><label class="module-label">Break (min)</label><input id="pomodoroBreak" class="module-input" type="number" value="5" min="1"></div>
-    <div><label class="module-label">Session Notes</label><input id="timerNotes" class="module-input" placeholder="Optional"></div>
-  </div>
+<div class="module-toolbar" style="justify-content:center">
+<select class="module-select" id="timerSubject" style="max-width:320px"></select>
+<select class="module-select" id="timerType" style="max-width:220px">
+<option value="Stopwatch">Stopwatch</option>
+<option value="Pomodoro">Pomodoro</option>
+</select>
+</div>
+<div class="timer-mode" id="timerModeLabel">STOPWATCH</div>
+<div class="timer-display" id="timerDisplay">00:00:00</div>
+<div class="timer-progress"><div id="timerProgress"></div></div>
+<div class="timer-controls">
+<button class="module-btn primary" id="startTimer">Start</button>
+<button class="module-btn" id="pauseTimer">Pause</button>
+<button class="module-btn" id="resetTimer">Reset</button>
+<button class="module-btn" id="saveTimer">Save Session</button>
+</div>
+<div class="timer-settings">
+<div><label class="module-label">Pomodoro Study (min)</label><input class="module-input" id="pomodoroStudy" min="1" type="number" value="25"/></div>
+<div><label class="module-label">Break (min)</label><input class="module-input" id="pomodoroBreak" min="1" type="number" value="5"/></div>
+<div><label class="module-label">Session Notes</label><input class="module-input" id="timerNotes" placeholder="Optional"/></div>
+</div>
 </section>
-
 <section class="module-panel">
-  <div class="panel-header"><div><h3>Today's Sessions</h3><p>Your saved study activity</p></div></div>
-  <div id="sessionList"></div>
+<div class="panel-header"><div><h3>Today's Sessions</h3><p>Your saved study activity</p></div></div>
+<div id="sessionList"></div>
 </section>
-
 </main>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1.0" name="viewport"/>
-<title>Revisions | Productive Horizon</title>
+<title>Settings | Productive Horizon</title>
 <link href="style.css" rel="stylesheet"/>
 <link href="modules.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
@@ -22,41 +22,38 @@
 <a class="nav-item" href="timer.html"><i class="fa-solid fa-clock"></i>Study Timer</a>
 <p class="nav-title">PROGRESS</p>
 <a class="nav-item" href="analytics.html"><i class="fa-solid fa-chart-line"></i>Analytics</a>
-<a class="nav-item active" href="revisions.html"><i class="fa-solid fa-rotate"></i>Revisions</a>
+<a class="nav-item" href="revisions.html"><i class="fa-solid fa-rotate"></i>Revisions</a>
 <a class="nav-item" href="weak-topics.html"><i class="fa-solid fa-triangle-exclamation"></i>Weak Topics</a>
 <a class="nav-item" href="journal.html"><i class="fa-solid fa-book-open"></i>Journal</a>
 </nav>
 <div class="sidebar-bottom">
-<a class="nav-item" href="settings.html"><i class="fa-solid fa-gear"></i>Settings</a>
+<a class="nav-item active" href="settings.html"><i class="fa-solid fa-gear"></i>Settings</a>
 </div>
 </aside>
 <main class="main">
 <header>
-<div><p class="small-text">REVISION SYSTEM</p><h1>Revisions 🔄</h1><p class="subtitle">Schedule revision cycles and never lose a topic.</p></div>
+<div><p class="small-text">PREFERENCES</p><h1>Settings ⚙️</h1><p class="subtitle">Exam, study goal and Pomodoro preferences.</p></div>
 <div class="header-actions"><button class="icon-button" id="moduleThemeButton" type="button">🌙</button></div>
 </header>
 <section class="module-panel">
-<form class="module-form-grid" id="revisionForm">
-<div><label class="module-label">Subject</label><select class="module-select" id="revisionSubject" required=""></select></div>
-<div><label class="module-label">Scheduled Date</label><input class="module-input" id="revisionDate" required="" type="date"/></div>
-<div><label class="module-label">Revision Number</label><input class="module-input" id="revisionNumber" min="1" type="number" value="1"/></div>
-<div><label class="module-label">Notes</label><input class="module-input" id="revisionNotes" placeholder="What to revise?"/></div>
-<div class="full"><button class="module-btn primary" type="submit">+ Add Revision</button></div>
+<form class="module-form-grid" id="settingsForm">
+<div><label class="module-label">Exam Name</label><input class="module-input" id="examName" placeholder="DSSSB TGT Computer Science"/></div>
+<div><label class="module-label">Exam Date</label><input class="module-input" id="examDate" type="date"/></div>
+<div><label class="module-label">Daily Study Goal (minutes)</label><input class="module-input" id="dailyGoal" min="1" type="number" value="480"/></div>
+<div><label class="module-label">Pomodoro Study (minutes)</label><input class="module-input" id="pomodoroStudySetting" min="1" type="number" value="25"/></div>
+<div><label class="module-label">Pomodoro Break (minutes)</label><input class="module-input" id="pomodoroBreakSetting" min="1" type="number" value="5"/></div>
+<div><label class="module-label">Long Break (minutes)</label><input class="module-input" id="pomodoroLongBreak" min="1" type="number" value="15"/></div>
+<div><label class="module-label">Pomodoro Cycles</label><input class="module-input" id="pomodoroCycles" min="1" type="number" value="4"/></div>
+<div><label class="module-label">Theme</label><select class="module-select" id="themeSetting"><option value="light">Light</option><option value="dark">Dark</option></select></div>
+<div class="full"><button class="module-btn primary" type="submit">Save Settings</button></div>
 </form>
 </section>
-<section class="module-grid">
-<div class="module-card"><p>Due Today</p><h2 id="rToday">0</h2></div>
-<div class="module-card"><p>Overdue</p><h2 id="rOverdue">0</h2></div>
-<div class="module-card"><p>Upcoming</p><h2 id="rUpcoming">0</h2></div>
-<div class="module-card"><p>Completed</p><h2 id="rCompleted">0</h2></div>
-</section>
-<section class="module-panel"><div class="panel-header"><div><h3>Revision Queue</h3><p>Due and upcoming revisions</p></div></div><div id="revisionList"></div></section>
 </main>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
 <script src="protected.js"></script>
 <script src="module-common.js"></script>
-<script src="revisions.js"></script>
+<script src="settings.js"></script>
 </body>
 </html>
