@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Analytics | Productive Horizon</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="modules.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="app">
+
+<aside class="sidebar">
+  <div class="logo"><div class="logo-icon">PH</div><div><h2>Productive</h2><span>Horizon</span></div></div>
+  <nav>
+    <p class="nav-title">WORKSPACE</p>
+    <a href="index.html" class="nav-item"><i class="fa-solid fa-chart-pie"></i>Dashboard</a>
+    <a href="index.html#tasks" class="nav-item"><i class="fa-solid fa-list-check"></i>Tasks</a>
+    <a href="subjects.html" class="nav-item"><i class="fa-solid fa-book"></i>Subjects</a>
+    <a href="planner.html" class="nav-item"><i class="fa-solid fa-calendar"></i>Planner</a>
+    <a href="timer.html" class="nav-item "><i class="fa-solid fa-clock"></i>Study Timer</a>
+
+    <p class="nav-title">PROGRESS</p>
+    <a href="analytics.html" class="nav-item active"><i class="fa-solid fa-chart-line"></i>Analytics</a>
+    <a href="revisions.html" class="nav-item "><i class="fa-solid fa-rotate"></i>Revisions</a>
+    <a href="weak-topics.html" class="nav-item "><i class="fa-solid fa-triangle-exclamation"></i>Weak Topics</a>
+    <a href="journal.html" class="nav-item "><i class="fa-solid fa-book-open"></i>Journal</a>
+  </nav>
+  <div class="sidebar-bottom">
+    <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i>Settings</a>
+  </div>
+</aside>
+
+<main class="main">
+<header>
+  <div><p class="small-text">PERFORMANCE</p><h1>Analytics 📈</h1><p class="subtitle">Daily, weekly and monthly productivity from your real cloud data.</p></div>
+  <div class="header-actions"><button id="moduleThemeButton" class="icon-button" type="button">🌙</button></div>
+</header>
+
+<section class="module-toolbar">
+  <select id="analyticsRange" class="module-select" style="max-width:220px">
+    <option value="7">Last 7 Days</option><option value="30">Last 30 Days</option>
+  </select>
+  <button id="refreshAnalytics" class="module-btn">Refresh</button>
+</section>
+<section class="module-grid">
+  <div class="module-card"><p>Study Time</p><h2 id="aStudy">0h 0m</h2><span class="muted">Selected period</span></div>
+  <div class="module-card"><p>Sessions</p><h2 id="aSessions">0</h2><span class="muted">Saved sessions</span></div>
+  <div class="module-card"><p>Task Completion</p><h2 id="aCompletion">0%</h2><span class="muted">Completed tasks</span></div>
+  <div class="module-card"><p>Consistency</p><h2 id="aConsistency">0%</h2><span class="muted">Days with study</span></div>
+</section>
+<section class="analytics-grid">
+  <div class="module-panel"><div class="panel-header"><div><h3>Daily Study Minutes</h3><p>Study consistency</p></div></div><div class="chart-box"><canvas id="dailyChart"></canvas></div></div>
+  <div class="module-panel"><div class="panel-header"><div><h3>Subject Distribution</h3><p>Where your time goes</p></div></div><div class="chart-box small"><canvas id="subjectAnalyticsChart"></canvas></div></div>
+</section>
+<section class="module-panel"><div class="panel-header"><div><h3>Subject Breakdown</h3><p>Total minutes by subject</p></div></div><div id="subjectBreakdown"></div></section>
+
+</main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="protected.js"></script>
+<script src="module-common.js"></script>
+<script src="analytics.js"></script>
+</body>
+</html>

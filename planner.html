@@ -9,7 +9,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Subjects | Productive Horizon</title>
+    <title>Planner | Productive Horizon</title>
 
     <link rel="stylesheet" href="style.css">
 
@@ -24,7 +24,6 @@
 <div class="app">
 
     <!-- SIDEBAR -->
-
     <aside class="sidebar">
 
         <div class="logo">
@@ -57,7 +56,7 @@
 
 
             <a
-                href="#"
+                href="index.html#tasks"
                 class="nav-item"
             >
                 <i class="fa-solid fa-list-check"></i>
@@ -67,20 +66,26 @@
 
             <a
                 href="subjects.html"
-                class="nav-item active"
+                class="nav-item"
             >
                 <i class="fa-solid fa-book"></i>
                 Subjects
             </a>
 
 
-           <a href="planner.html" class="nav-item">
-    <i class="fa-solid fa-calendar"></i>
-    Planner
-</a>
+            <a
+                href="planner.html"
+                class="nav-item active"
+            >
+                <i class="fa-solid fa-calendar"></i>
+                Planner
+            </a>
 
 
-            <a href="#" class="nav-item">
+            <a
+                href="#"
+                class="nav-item"
+            >
                 <i class="fa-solid fa-clock"></i>
                 Study Timer
             </a>
@@ -130,7 +135,6 @@
 
 
     <!-- MAIN -->
-
     <main class="main">
 
         <header>
@@ -138,15 +142,15 @@
             <div>
 
                 <p class="small-text">
-                    SYLLABUS MANAGEMENT
+                    STUDY PLANNER
                 </p>
 
                 <h1>
-                    Subjects & Topics 📚
+                    Planner 📅
                 </h1>
 
                 <p class="subtitle">
-                    Manage your complete study structure.
+                    Plan tasks by date and stay on track.
                 </p>
 
             </div>
@@ -155,8 +159,9 @@
             <div class="header-actions">
 
                 <button
-                    id="subjectThemeButton"
+                    id="plannerThemeButton"
                     class="icon-button"
+                    type="button"
                 >
                     🌙
                 </button>
@@ -166,181 +171,155 @@
         </header>
 
 
-        <!-- TOP SUMMARY -->
+        <!-- DATE CONTROLS -->
 
-        <section class="subject-summary-grid">
+        <section class="planner-toolbar">
+
+            <button
+                id="previousDayButton"
+                class="secondary-button"
+            >
+                ← Previous
+            </button>
+
+
+            <input
+                type="date"
+                id="plannerDate"
+                class="planner-date-input"
+            >
+
+
+            <button
+                id="todayButton"
+                class="secondary-button"
+            >
+                Today
+            </button>
+
+
+            <button
+                id="nextDayButton"
+                class="secondary-button"
+            >
+                Next →
+            </button>
+
+        </section>
+
+
+        <!-- SUMMARY -->
+
+        <section class="stats-grid">
 
             <div class="stat-card">
 
-                <p>Total Subjects</p>
+                <div class="stat-icon">
+                    📋
+                </div>
 
-                <h2 id="totalSubjects">
+                <p>Total Tasks</p>
+
+                <h2 id="plannerTotal">
                     0
                 </h2>
 
-                <span>Across all sections</span>
+                <span>
+                    Planned for selected day
+                </span>
 
             </div>
 
 
             <div class="stat-card">
 
-                <p>Total Topics</p>
+                <div class="stat-icon">
+                    ✅
+                </div>
 
-                <h2 id="totalTopics">
+                <p>Completed</p>
+
+                <h2 id="plannerCompleted">
                     0
                 </h2>
 
-                <span>Your syllabus topics</span>
+                <span>
+                    Finished tasks
+                </span>
 
             </div>
 
 
             <div class="stat-card">
 
-                <p>Total Subtopics</p>
+                <div class="stat-icon">
+                    ⏳
+                </div>
 
-                <h2 id="totalSubtopics">
+                <p>Pending</p>
+
+                <h2 id="plannerPending">
                     0
                 </h2>
 
-                <span>Detailed learning areas</span>
+                <span>
+                    Still to complete
+                </span>
 
             </div>
 
 
             <div class="stat-card highlight">
 
-                <p>Syllabus Progress</p>
+                <div class="stat-icon">
+                    ⏱️
+                </div>
 
-                <h2 id="overallProgress">
-                    0%
+                <p>Planned Time</p>
+
+                <h2 id="plannerMinutes">
+                    0m
                 </h2>
 
-                <span>Overall completion</span>
+                <span>
+                    Total planned study
+                </span>
 
             </div>
 
         </section>
 
 
-        <!-- ACTIONS -->
+        <!-- TASKS -->
 
-        <section class="subject-toolbar">
+        <section class="panel planner-panel">
 
-            <div>
+            <div class="panel-header">
 
-                <h2>
-                    My Subjects
-                </h2>
+                <div>
 
-                <p>
-                    Add, edit and organize your syllabus.
-                </p>
+                    <h3 id="plannerHeading">
+                        Tasks
+                    </h3>
 
-            </div>
+                    <p>
+                        Tasks scheduled for this date
+                    </p>
 
-<div class="subject-toolbar-buttons">
-
-    <button
-        id="addSectionButton"
-        class="secondary-button"
-        type="button"
-    >
-        + Add Section
-    </button>
-
-    <button
-        id="addSubjectButton"
-        class="primary-button"
-        type="button"
-    >
-        + Add Subject
-    </button>
-
-</div>
-
-        </section>
-
-
-        <!-- SUBJECT DATA -->
-
-        <div id="sectionsContainer"></div>
-
-    </main>
-
-</div>
-
-
-<!-- GENERIC MODAL -->
-
-<div
-    id="subjectModal"
-    class="modal"
->
-
-    <div class="modal-box">
-
-        <div class="modal-header">
-
-            <div>
-
-                <h2 id="subjectModalTitle">
-                    Add Subject
-                </h2>
-
-                <p id="subjectModalSubtitle">
-                    Add something to your syllabus.
-                </p>
+                </div>
 
             </div>
-
-
-            <button id="closeSubjectModal">
-                ×
-            </button>
-
-        </div>
-
-
-        <form id="subjectForm">
-
-            <label id="nameLabel">
-                Name
-            </label>
-
-            <input
-                id="itemName"
-                type="text"
-                placeholder="Enter name"
-                required
-            >
 
 
             <div
-                id="sectionSelectArea"
-                class="hidden"
+                id="plannerTaskList"
+                class="planner-task-list"
             >
-
-                <label>
-                    Section
-                </label>
-
-                <select id="sectionSelect"></select>
-
             </div>
 
+        </section>
 
-            <button
-                class="save-button"
-                type="submit"
-            >
-                Save
-            </button>
-
-        </form>
-
-    </div>
+    </main>
 
 </div>
 
@@ -351,7 +330,7 @@
 
 <script src="protected.js"></script>
 
-<script src="subjects.js"></script>
+<script src="planner.js"></script>
 
 </body>
 </html>

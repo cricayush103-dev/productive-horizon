@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Journal | Productive Horizon</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="modules.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+<body>
+<div class="app">
+
+<aside class="sidebar">
+  <div class="logo"><div class="logo-icon">PH</div><div><h2>Productive</h2><span>Horizon</span></div></div>
+  <nav>
+    <p class="nav-title">WORKSPACE</p>
+    <a href="index.html" class="nav-item"><i class="fa-solid fa-chart-pie"></i>Dashboard</a>
+    <a href="index.html#tasks" class="nav-item"><i class="fa-solid fa-list-check"></i>Tasks</a>
+    <a href="subjects.html" class="nav-item"><i class="fa-solid fa-book"></i>Subjects</a>
+    <a href="planner.html" class="nav-item"><i class="fa-solid fa-calendar"></i>Planner</a>
+    <a href="timer.html" class="nav-item "><i class="fa-solid fa-clock"></i>Study Timer</a>
+
+    <p class="nav-title">PROGRESS</p>
+    <a href="analytics.html" class="nav-item "><i class="fa-solid fa-chart-line"></i>Analytics</a>
+    <a href="revisions.html" class="nav-item "><i class="fa-solid fa-rotate"></i>Revisions</a>
+    <a href="weak-topics.html" class="nav-item "><i class="fa-solid fa-triangle-exclamation"></i>Weak Topics</a>
+    <a href="journal.html" class="nav-item active"><i class="fa-solid fa-book-open"></i>Journal</a>
+  </nav>
+  <div class="sidebar-bottom">
+    <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i>Settings</a>
+  </div>
+</aside>
+
+<main class="main">
+<header>
+  <div><p class="small-text">DAILY REFLECTION</p><h1>Journal 📖</h1><p class="subtitle">Track focus, energy, wins and problems without overthinking it.</p></div>
+  <div class="header-actions"><button id="moduleThemeButton" class="icon-button" type="button">🌙</button></div>
+</header>
+
+<section class="module-panel">
+<form id="journalForm" class="module-form-grid">
+ <div><label class="module-label">Date</label><input id="journalDate" type="date" class="module-input" required></div>
+ <div><label class="module-label">Focus Score (1-10)</label><input id="focusScore" type="number" min="1" max="10" value="7" class="module-input"></div>
+ <div><label class="module-label">Energy Score (1-10)</label><input id="energyScore" type="number" min="1" max="10" value="7" class="module-input"></div>
+ <div></div>
+ <div class="full"><label class="module-label">What Went Well?</label><textarea id="wentWell" class="module-textarea"></textarea></div>
+ <div class="full"><label class="module-label">What Went Wrong?</label><textarea id="wentWrong" class="module-textarea"></textarea></div>
+ <div class="full"><label class="module-label">Notes</label><textarea id="journalNotes" class="module-textarea"></textarea></div>
+ <div class="full"><button class="module-btn primary" type="submit">Save Journal Entry</button></div>
+</form>
+</section>
+<section class="module-panel"><div class="panel-header"><div><h3>Recent Entries</h3><p>Your daily reflection history</p></div></div><div id="journalList"></div></section>
+
+</main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="protected.js"></script>
+<script src="module-common.js"></script>
+<script src="journal.js"></script>
+</body>
+</html>
