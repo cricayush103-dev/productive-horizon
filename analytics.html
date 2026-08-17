@@ -1,14 +1,31 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Analytics | Productive Horizon</title>
-<link href="style.css" rel="stylesheet"/>
-<link href="modules.css" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="modules.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+.analytics-switcher,.analytics-date-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+.analytics-switcher .active{background:var(--text);color:var(--card)}
+.analytics-hidden{display:none!important}
+.daily-detail-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:18px 0}
+.daily-detail-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px}
+.daily-detail-card p{font-size:11px;color:var(--secondary);margin-bottom:7px}
+.analytics-day-layout{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+.timeline-item{display:grid;grid-template-columns:105px 1fr auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--border)}
+.timeline-item:last-child{border-bottom:0}.timeline-time,.timeline-main span{font-size:12px;color:var(--secondary)}
+.timeline-main strong{display:block;margin-bottom:4px}.timeline-duration{font-weight:700;white-space:nowrap}
+.live-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 8px;border-radius:999px;font-size:10px;background:var(--accent-light);color:var(--accent);margin-left:7px}
+.live-dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.subject-day-row{display:grid;grid-template-columns:minmax(130px,1fr) 2fr auto;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--border)}
+.subject-day-bar{height:8px;border-radius:999px;background:var(--background);overflow:hidden}.subject-day-fill{height:100%;background:var(--text)}
+@media(max-width:1050px){.daily-detail-grid{grid-template-columns:repeat(3,1fr)}.analytics-day-layout{grid-template-columns:1fr}}
+@media(max-width:700px){.daily-detail-grid{grid-template-columns:1fr 1fr}.timeline-item{grid-template-columns:1fr auto}.timeline-time{grid-column:1/-1}}
+</style>
 </head>
 <body>
 <div class="app">
@@ -16,35 +33,39 @@
 <div class="logo"><div class="logo-icon">PH</div><div><h2>Productive</h2><span>Horizon</span></div></div>
 <nav>
 <p class="nav-title">WORKSPACE</p>
-<a class="nav-item" href="index.html"><i class="fa-solid fa-chart-pie"></i>Dashboard</a>
-<a class="nav-item" href="index.html#tasks"><i class="fa-solid fa-list-check"></i>Tasks</a>
-<a class="nav-item" href="subjects.html"><i class="fa-solid fa-book"></i>Subjects</a>
-<a class="nav-item" href="planner.html"><i class="fa-solid fa-calendar"></i>Planner</a>
-<a class="nav-item" href="timer.html"><i class="fa-solid fa-clock"></i>Study Timer</a>
+<a href="index.html" class="nav-item"><i class="fa-solid fa-chart-pie"></i>Dashboard</a>
+<a href="index.html#tasks" class="nav-item"><i class="fa-solid fa-list-check"></i>Tasks</a>
+<a href="subjects.html" class="nav-item"><i class="fa-solid fa-book"></i>Subjects</a>
+<a href="planner.html" class="nav-item"><i class="fa-solid fa-calendar"></i>Planner</a>
+<a href="timer.html" class="nav-item"><i class="fa-solid fa-clock"></i>Study Timer</a>
 <p class="nav-title">PROGRESS</p>
-<a class="nav-item active" href="analytics.html"><i class="fa-solid fa-chart-line"></i>Analytics</a>
-<a class="nav-item" href="revisions.html"><i class="fa-solid fa-rotate"></i>Revisions</a>
-<a class="nav-item" href="weak-topics.html"><i class="fa-solid fa-triangle-exclamation"></i>Weak Topics</a>
-<a class="nav-item" href="journal.html"><i class="fa-solid fa-book-open"></i>Journal</a>
+<a href="analytics.html" class="nav-item active"><i class="fa-solid fa-chart-line"></i>Analytics</a>
+<a href="revisions.html" class="nav-item"><i class="fa-solid fa-rotate"></i>Revisions</a>
+<a href="weak-topics.html" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i>Weak Topics</a>
+<a href="journal.html" class="nav-item"><i class="fa-solid fa-book-open"></i>Journal</a>
 </nav>
-<div class="sidebar-bottom">
-<a class="nav-item" href="settings.html"><i class="fa-solid fa-gear"></i>Settings</a>
-</div>
+<div class="sidebar-bottom"><a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i>Settings</a></div>
 </aside>
+
 <main class="main">
 <header>
-<div><p class="small-text">PERFORMANCE</p><h1>Analytics 📈</h1><p class="subtitle">Daily, weekly and monthly productivity from your real cloud data.</p></div>
-<div class="header-actions"><button class="icon-button" id="moduleThemeButton" type="button">🌙</button></div>
+<div><p class="small-text">PERFORMANCE</p><h1>Analytics 📈</h1><p class="subtitle">See exactly what you studied and how productive each day was.</p></div>
+<div class="header-actions"><button id="moduleThemeButton" class="icon-button" type="button">🌙</button></div>
 </header>
+
+<section class="analytics-switcher">
+<button id="overviewViewButton" class="module-btn active">Overview</button>
+<button id="dayViewButton" class="module-btn">Specific Day</button>
+</section>
+
+<div id="overviewView">
 <section class="module-toolbar">
-<select class="module-select" id="analyticsRange" style="max-width:220px">
-<option value="7">Last 7 Days</option><option value="30">Last 30 Days</option>
-</select>
-<button class="module-btn" id="refreshAnalytics">Refresh</button>
+<select id="analyticsRange" class="module-select" style="max-width:220px"><option value="7">Last 7 Days</option><option value="30">Last 30 Days</option></select>
+<button id="refreshAnalytics" class="module-btn">Refresh</button>
 </section>
 <section class="module-grid">
 <div class="module-card"><p>Study Time</p><h2 id="aStudy">0h 0m</h2><span class="muted">Selected period</span></div>
-<div class="module-card"><p>Sessions</p><h2 id="aSessions">0</h2><span class="muted">Saved sessions</span></div>
+<div class="module-card"><p>Sessions</p><h2 id="aSessions">0</h2><span class="muted">Saved + live</span></div>
 <div class="module-card"><p>Task Completion</p><h2 id="aCompletion">0%</h2><span class="muted">Completed tasks</span></div>
 <div class="module-card"><p>Consistency</p><h2 id="aConsistency">0%</h2><span class="muted">Days with study</span></div>
 </section>
@@ -53,6 +74,32 @@
 <div class="module-panel"><div class="panel-header"><div><h3>Subject Distribution</h3><p>Where your time goes</p></div></div><div class="chart-box small"><canvas id="subjectAnalyticsChart"></canvas></div></div>
 </section>
 <section class="module-panel"><div class="panel-header"><div><h3>Subject Breakdown</h3><p>Total minutes by subject</p></div></div><div id="subjectBreakdown"></div></section>
+</div>
+
+<div id="dayView" class="analytics-hidden">
+<section class="analytics-date-toolbar">
+<button id="previousAnalyticsDay" class="module-btn">← Previous</button>
+<input id="analyticsDate" class="module-input" type="date" style="max-width:190px">
+<button id="analyticsTodayButton" class="module-btn">Today</button>
+<button id="nextAnalyticsDay" class="module-btn">Next →</button>
+<button id="refreshDayAnalytics" class="module-btn">Refresh</button>
+</section>
+
+<section class="daily-detail-grid">
+<div class="daily-detail-card"><p>Total Study</p><h2 id="dayStudyTime">0h 0m</h2></div>
+<div class="daily-detail-card"><p>Productivity</p><h2 id="dayProductivity">0.0 / 10</h2></div>
+<div class="daily-detail-card"><p>Tasks Completed</p><h2 id="dayTasks">0 / 0</h2></div>
+<div class="daily-detail-card"><p>Study Sessions</p><h2 id="daySessions">0</h2></div>
+<div class="daily-detail-card"><p>Subjects Studied</p><h2 id="daySubjects">0</h2></div>
+</section>
+
+<section class="analytics-day-layout">
+<div class="module-panel"><div class="panel-header"><div><h3 id="dayHeading">Daily Study Timeline</h3><p>Every saved session for this day</p></div></div><div id="dayTimeline"></div></div>
+<div class="module-panel"><div class="panel-header"><div><h3>Subject Split</h3><p>Time spent per subject</p></div></div><div class="chart-box small"><canvas id="daySubjectChart"></canvas></div><div id="daySubjectBreakdown" style="margin-top:16px"></div></div>
+</section>
+
+<section class="module-panel"><div class="panel-header"><div><h3>Daily Productivity</h3><p>50% study-goal achievement + 50% task completion</p></div></div><div id="productivityExplanation"></div></section>
+</div>
 </main>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
