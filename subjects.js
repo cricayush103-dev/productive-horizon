@@ -892,18 +892,46 @@ function renderSubject(
             </div>
 
 
-            <div class="subject-card-actions">
+           <div class="subject-card-actions">
 
-                <button
-                    onclick="
-                        addTopic(
-                            '${section.id}',
-                            '${subject.id}'
-                        )
-                    "
-                >
-                    + Topic
-                </button>
+    <button
+        title="Move subject up"
+        onclick="
+            moveSubject(
+                '${section.id}',
+                '${subject.id}',
+                -1
+            )
+        "
+    >
+        ⬆️
+    </button>
+
+
+    <button
+        title="Move subject down"
+        onclick="
+            moveSubject(
+                '${section.id}',
+                '${subject.id}',
+                1
+            )
+        "
+    >
+        ⬇️
+    </button>
+
+
+    <button
+        onclick="
+            addTopic(
+                '${section.id}',
+                '${subject.id}'
+            )
+        "
+    >
+        + Topic
+    </button>
 
 
                 <button
@@ -3700,3 +3728,392 @@ document.addEventListener(
 // =====================================================
 
 loadCloudData();
+// =====================================================
+// SUBJECT PRIORITY / REORDER
+// =====================================================
+
+let subjectMoveInProgress = false;
+
+
+async function moveSubject(
+    sectionId,
+    subjectId,
+    direction
+) {
+
+    // Prevent double click / multiple updates
+    if (subjectMoveInProgress) {
+        return;
+    }
+
+
+    const section =
+        findSection(
+            sectionId
+        );
+
+
+    if (!section) {
+
+        console.error(
+            "Section not found:",
+            sectionId
+        );
+
+        return;
+    }
+
+
+    const subjects =
+        section.subjects;
+
+
+    const currentIndex =
+        subjects.findIndex(
+            subject =>
+                subject.id ===
+                subjectId
+        );
+
+
+    if (currentIndex === -1) {
+
+        console.error(
+            "Subject not found:",
+            subjectId
+        );
+
+        return;
+    }
+
+
+    const targetIndex =
+        currentIndex +
+        direction;
+
+
+    // Already highest priority
+    if (targetIndex < 0) {
+        return;
+    }
+
+
+    // Already lowest priority
+    if (
+        targetIndex >=
+        subjects.length
+    ) {
+        return;
+    }
+
+
+    const currentSubject =
+        subjects[
+            currentIndex
+        ];
+
+
+    const targetSubject =
+        subjects[
+            targetIndex
+        ];
+
+
+    /*
+        IMPORTANT:
+
+        We swap the ACTUAL database
+        position values.
+
+        We do NOT assume that array
+        index = database position.
+
+        This keeps the system safe
+        even if positions have gaps.
+    */
+
+    const currentPosition =
+        Number(
+            currentSubject.position ??
+            currentIndex
+        );
+
+
+    const targetPosition =
+        Number(
+            targetSubject.position ??
+            targetIndex
+        );
+
+
+    subjectMoveInProgress =
+        true;
+
+
+    try {
+
+        // =============================================
+        // TEMPORARILY MOVE CURRENT SUBJECT
+        // =============================================
+
+        const temporaryPosition =
+            -1000000;
+
+
+        const {
+            error:
+                temporaryError
+        } =
+        await supabaseClient
+            .from(
+                "subjects"
+            )
+            .update({
+
+                position:
+                    temporaryPosition
+
+            })
+            .eq(
+                "id",
+                currentSubject.id
+            )
+            .eq(
+                "user_id",
+                currentUserId
+            );
+
+
+        if (temporaryError) {
+
+            throw temporaryError;
+
+        }
+
+
+        // =============================================
+        // MOVE TARGET SUBJECT
+        // TO CURRENT SUBJECT'S POSITION
+        // =============================================
+
+        const {
+            error:
+                targetError
+        } =
+        await supabaseClient
+            .from(
+                "subjects"
+            )
+            .update({
+
+                position:
+                    currentPosition
+
+            })
+            .eq(
+                "id",
+                targetSubject.id
+            )
+            .eq(
+                "user_id",
+                currentUserId
+            );
+
+
+        if (targetError) {
+
+            /*
+                Try restoring current subject
+                before throwing error.
+            */
+
+            await supabaseClient
+                .from(
+                    "subjects"
+                )
+                .update({
+
+                    position:
+                        currentPosition
+
+                })
+                .eq(
+                    "id",
+                    currentSubject.id
+                )
+                .eq(
+                    "user_id",
+                    currentUserId
+                );
+
+
+            throw targetError;
+
+        }
+
+
+        // =============================================
+        // MOVE CURRENT SUBJECT
+        // TO TARGET SUBJECT'S POSITION
+        // =============================================
+
+        const {
+            error:
+                currentError
+        } =
+        await supabaseClient
+            .from(
+                "subjects"
+            )
+            .update({
+
+                position:
+                    targetPosition
+
+            })
+            .eq(
+                "id",
+                currentSubject.id
+            )
+            .eq(
+                "user_id",
+                currentUserId
+            );
+
+
+        if (currentError) {
+
+            /*
+                Try restoring both positions
+                if final update fails.
+            */
+
+            await supabaseClient
+                .from(
+                    "subjects"
+                )
+                .update({
+
+                    position:
+                        targetPosition
+
+                })
+                .eq(
+                    "id",
+                    targetSubject.id
+                )
+                .eq(
+                    "user_id",
+                    currentUserId
+                );
+
+
+            await supabaseClient
+                .from(
+                    "subjects"
+                )
+                .update({
+
+                    position:
+                        currentPosition
+
+                })
+                .eq(
+                    "id",
+                    currentSubject.id
+                )
+                .eq(
+                    "user_id",
+                    currentUserId
+                );
+
+
+            throw currentError;
+
+        }
+
+
+        // =============================================
+        // UPDATE LOCAL DATA
+        // =============================================
+
+        currentSubject.position =
+            targetPosition;
+
+
+        targetSubject.position =
+            currentPosition;
+
+
+        // Swap array positions
+        subjects[
+            currentIndex
+        ] =
+            targetSubject;
+
+
+        subjects[
+            targetIndex
+        ] =
+            currentSubject;
+
+
+        // =============================================
+        // REDRAW SUBJECTS
+        // =============================================
+
+        renderSections();
+
+
+        console.log(
+            "Subject priority updated:",
+            currentSubject.name
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Subject priority update failed:",
+            error
+        );
+
+
+        alert(
+            "Could not change subject priority. Please try again."
+        );
+
+
+        /*
+            Reload actual Supabase order
+            so UI and cloud stay synced.
+        */
+
+        try {
+
+            await loadCloudData();
+
+        }
+
+        catch (
+            reloadError
+        ) {
+
+            console.error(
+                "Could not reload subjects:",
+                reloadError
+            );
+
+        }
+
+    }
+
+    finally {
+
+        subjectMoveInProgress =
+            false;
+
+    }
+
+}
