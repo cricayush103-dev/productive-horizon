@@ -74,6 +74,83 @@ let currentSubtopicId = null;
 
 
 
+
+// =====================================================
+// COLLAPSIBLE SUBJECTS / TOPICS
+// =====================================================
+
+function toggleSubjectTopics(subjectId) {
+    const list = document.getElementById(`topics-${subjectId}`);
+    const button = document.getElementById(`subject-toggle-${subjectId}`);
+
+    if (!list || !button) return;
+
+    const isCollapsed = list.classList.toggle("collapsed");
+    button.textContent = isCollapsed ? "▶" : "▼";
+    button.title = isCollapsed ? "Show topics" : "Hide topics";
+}
+
+
+function toggleTopicSubtopics(topicId) {
+    const list = document.getElementById(`subtopics-${topicId}`);
+    const button = document.getElementById(`topic-toggle-${topicId}`);
+
+    if (!list || !button) return;
+
+    // Topic without subtopics has nothing to expand.
+    if (!list.children.length) return;
+
+    const isCollapsed = list.classList.toggle("collapsed");
+    button.textContent = isCollapsed ? "▶" : "▼";
+    button.title = isCollapsed ? "Show subtopics" : "Hide subtopics";
+}
+
+
+function setAllSubjectVisibility(expand) {
+    document.querySelectorAll(".topics-list").forEach(list => {
+        list.classList.toggle("collapsed", !expand);
+    });
+
+    document.querySelectorAll(".subject-collapse-toggle").forEach(button => {
+        button.textContent = expand ? "▼" : "▶";
+        button.title = expand ? "Hide topics" : "Show topics";
+    });
+
+    document.querySelectorAll(".subtopics-list").forEach(list => {
+        if (expand && list.children.length) {
+            list.classList.remove("collapsed");
+        } else {
+            list.classList.add("collapsed");
+        }
+    });
+
+    document.querySelectorAll(".topic-collapse-toggle").forEach(button => {
+        const topicId = button.id.replace("topic-toggle-", "");
+        const list = document.getElementById(`subtopics-${topicId}`);
+        button.textContent =
+            expand && list && list.children.length
+                ? "▼"
+                : (list && list.children.length ? "▶" : "•");
+    });
+}
+
+
+document.getElementById("expandAllSubjects")?.addEventListener(
+    "click",
+    function () {
+        setAllSubjectVisibility(true);
+    }
+);
+
+
+document.getElementById("collapseAllSubjects")?.addEventListener(
+    "click",
+    function () {
+        setAllSubjectVisibility(false);
+    }
+);
+
+
 // =====================================================
 // BULK TOPIC IMPORT - DOM
 // =====================================================
@@ -762,6 +839,20 @@ function renderSubject(
 
             <div class="subject-main-info">
 
+                <button
+                    class="subject-collapse-toggle"
+                    id="subject-toggle-${subject.id}"
+                    type="button"
+                    title="Show topics"
+                    onclick="
+                        toggleSubjectTopics(
+                            '${subject.id}'
+                        )
+                    "
+                >
+                    ▶
+                </button>
+
                 <input
                     type="checkbox"
 
@@ -870,7 +961,7 @@ function renderSubject(
 
 
         <div
-            class="topics-list"
+            class="topics-list collapsed"
             id="topics-${subject.id}"
         ></div>
     `;
@@ -926,6 +1017,20 @@ function renderTopic(
         <div class="topic-top-row">
 
             <div class="topic-name-area">
+
+                <button
+                    class="topic-collapse-toggle"
+                    id="topic-toggle-${topic.id}"
+                    type="button"
+                    title="Show subtopics"
+                    onclick="
+                        toggleTopicSubtopics(
+                            '${topic.id}'
+                        )
+                    "
+                >
+                    ${topic.subtopics.length ? "▶" : "•"}
+                </button>
 
                 <input
                     type="checkbox"
@@ -1002,7 +1107,7 @@ function renderTopic(
 
 
         <div
-            class="subtopics-list"
+            class="subtopics-list collapsed"
             id="subtopics-${topic.id}"
         ></div>
     `;
