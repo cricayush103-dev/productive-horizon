@@ -1039,7 +1039,6 @@ if (
         "☀️";
 }
 
-
 // =====================================================
 // PRODUCTIVITY CHART
 // =====================================================
@@ -1049,15 +1048,12 @@ const productivityCanvas =
         "productivityChart"
     );
 
-
 new Chart(
     productivityCanvas,
     {
-
-        type: "line",
+        type: "bar",
 
         data: {
-
             labels: [
                 "Mon",
                 "Tue",
@@ -1069,9 +1065,7 @@ new Chart(
             ],
 
             datasets: [
-
                 {
-
                     label:
                         "Productivity Score",
 
@@ -1086,22 +1080,24 @@ new Chart(
                     ],
 
                     borderWidth:
-                        2,
+                        1,
 
-                    tension:
-                        0.4,
+                    borderRadius:
+                        7,
 
-                    fill:
-                        false
+                    borderSkipped:
+                        false,
 
+                    barPercentage:
+                        0.68,
+
+                    categoryPercentage:
+                        0.72
                 }
-
             ]
-
         },
 
         options: {
-
             responsive:
                 true,
 
@@ -1109,35 +1105,29 @@ new Chart(
                 false,
 
             scales: {
-
                 y: {
-
                     beginAtZero:
                         true,
 
                     max:
-                        10
+                        10,
 
+                    ticks: {
+                        stepSize:
+                            1
+                    }
                 }
-
             },
 
             plugins: {
-
                 legend: {
-
                     display:
                         false
-
                 }
-
             }
-
         }
-
     }
 );
-
 
 // =====================================================
 // SUBJECT CHART
