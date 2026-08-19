@@ -73,6 +73,55 @@ let currentTopicId = null;
 let currentSubtopicId = null;
 
 
+
+// =====================================================
+// BULK TOPIC IMPORT - DOM
+// =====================================================
+
+const bulkImportModal =
+    document.getElementById(
+        "bulkImportModal"
+    );
+
+const bulkImportTitle =
+    document.getElementById(
+        "bulkImportTitle"
+    );
+
+const bulkImportSubtitle =
+    document.getElementById(
+        "bulkImportSubtitle"
+    );
+
+const bulkImportText =
+    document.getElementById(
+        "bulkImportText"
+    );
+
+const bulkImportPreview =
+    document.getElementById(
+        "bulkImportPreview"
+    );
+
+const closeBulkImportModalButton =
+    document.getElementById(
+        "closeBulkImportModal"
+    );
+
+const cancelBulkImportButton =
+    document.getElementById(
+        "cancelBulkImport"
+    );
+
+const importBulkTopicsButton =
+    document.getElementById(
+        "importBulkTopicsButton"
+    );
+
+let bulkImportSectionId = null;
+let bulkImportSubjectId = null;
+
+
 // =====================================================
 // PAGE SAFETY
 // =====================================================
@@ -763,6 +812,19 @@ function renderSubject(
                     "
                 >
                     + Topic
+                </button>
+
+
+                <button
+                    class="bulk-import-button"
+                    onclick="
+                        openBulkImport(
+                            '${section.id}',
+                            '${subject.id}'
+                        )
+                    "
+                >
+                    ⚡ Bulk Add
                 </button>
 
 
@@ -2670,6 +2732,862 @@ if (
     themeButton.textContent =
         "☀️";
 }
+
+
+
+// =====================================================
+// BULK TOPIC IMPORT
+// =====================================================
+
+function normalizeImportName(
+    value
+) {
+
+    return String(
+        value || ""
+    )
+        .trim()
+        .replace(
+            /\s+/g,
+            " "
+        );
+}
+
+
+function importNameKey(
+    value
+) {
+
+    return normalizeImportName(
+        value
+    )
+        .toLocaleLowerCase();
+}
+
+
+// -----------------------------------------------------
+// PARSER
+//
+// Normal line:
+//     Topic
+//
+// Bullet line:
+//     - Subtopic
+//     • Subtopic
+//     * Subtopic
+//
+// Repeated topics inside the same paste are merged.
+// -----------------------------------------------------
+
+function parseBulkImportText(
+    text
+) {
+
+    const lines =
+        String(
+            text || ""
+        )
+            .replace(
+                /\r/g,
+                ""
+            )
+            .split("\n");
+
+
+    const topicMap =
+        new Map();
+
+
+    let currentTopic =
+        null;
+
+
+    lines.forEach(
+        rawLine => {
+
+            const trimmed =
+                rawLine.trim();
+
+
+            if (!trimmed) {
+                return;
+            }
+
+
+            const bulletMatch =
+                trimmed.match(
+                    /^[-•*]\s*(.+)$/
+                );
+
+
+            // SUBTOPIC
+            if (bulletMatch) {
+
+                if (!currentTopic) {
+
+                    // Ignore orphan subtopic because
+                    // there is no topic above it.
+                    return;
+                }
+
+
+                const subtopicName =
+                    normalizeImportName(
+                        bulletMatch[1]
+                    );
+
+
+                if (!subtopicName) {
+                    return;
+                }
+
+
+                const subtopicKey =
+                    importNameKey(
+                        subtopicName
+                    );
+
+
+                if (
+                    !currentTopic
+                        .subtopicKeys
+                        .has(
+                            subtopicKey
+                        )
+                ) {
+
+                    currentTopic
+                        .subtopicKeys
+                        .add(
+                            subtopicKey
+                        );
+
+
+                    currentTopic
+                        .subtopics
+                        .push(
+                            subtopicName
+                        );
+
+                }
+
+
+                return;
+            }
+
+
+            // TOPIC
+            const topicName =
+                normalizeImportName(
+                    trimmed
+                        .replace(
+                            /:$/,
+                            ""
+                        )
+                );
+
+
+            if (!topicName) {
+                return;
+            }
+
+
+            const topicKey =
+                importNameKey(
+                    topicName
+                );
+
+
+            if (
+                !topicMap.has(
+                    topicKey
+                )
+            ) {
+
+                topicMap.set(
+                    topicKey,
+                    {
+                        name:
+                            topicName,
+
+                        subtopics:
+                            [],
+
+                        subtopicKeys:
+                            new Set()
+                    }
+                );
+
+            }
+
+
+            currentTopic =
+                topicMap.get(
+                    topicKey
+                );
+
+        }
+    );
+
+
+    return Array.from(
+        topicMap.values()
+    )
+        .map(
+            topic => ({
+                name:
+                    topic.name,
+
+                subtopics:
+                    topic.subtopics
+            })
+        );
+}
+
+
+// -----------------------------------------------------
+// OPEN / CLOSE
+// -----------------------------------------------------
+
+function openBulkImport(
+    sectionId,
+    subjectId
+) {
+
+    const subject =
+        findSubject(
+            sectionId,
+            subjectId
+        );
+
+
+    if (!subject) {
+        return;
+    }
+
+
+    bulkImportSectionId =
+        sectionId;
+
+
+    bulkImportSubjectId =
+        subjectId;
+
+
+    bulkImportTitle.textContent =
+        `Bulk Add Topics — ${subject.name}`;
+
+
+    bulkImportSubtitle.textContent =
+        "Paste topics and subtopics. Existing duplicates will be skipped automatically.";
+
+
+    bulkImportText.value =
+        "";
+
+
+    updateBulkImportPreview();
+
+
+    bulkImportModal.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        function () {
+
+            bulkImportText.focus();
+
+        },
+        50
+    );
+}
+
+
+function closeBulkImport() {
+
+    bulkImportModal.classList.remove(
+        "show"
+    );
+
+
+    bulkImportSectionId =
+        null;
+
+
+    bulkImportSubjectId =
+        null;
+
+
+    bulkImportText.value =
+        "";
+
+}
+
+
+// -----------------------------------------------------
+// PREVIEW
+// -----------------------------------------------------
+
+function updateBulkImportPreview() {
+
+    const parsed =
+        parseBulkImportText(
+            bulkImportText.value
+        );
+
+
+    const topicCount =
+        parsed.length;
+
+
+    const subtopicCount =
+        parsed.reduce(
+            (
+                total,
+                topic
+            ) =>
+                total +
+                topic.subtopics.length,
+            0
+        );
+
+
+    if (
+        topicCount === 0
+    ) {
+
+        bulkImportPreview.innerHTML =
+            "Paste your syllabus to see the preview.";
+
+
+        return;
+    }
+
+
+    const previewNames =
+        parsed
+            .slice(
+                0,
+                4
+            )
+            .map(
+                topic =>
+                    escapeHTML(
+                        topic.name
+                    )
+            )
+            .join(
+                ", "
+            );
+
+
+    bulkImportPreview.innerHTML =
+        `
+            <strong>
+                ${topicCount}
+                Topic${
+                    topicCount === 1
+                        ? ""
+                        : "s"
+                }
+                •
+                ${subtopicCount}
+                Subtopic${
+                    subtopicCount === 1
+                        ? ""
+                        : "s"
+                }
+            </strong>
+
+            <br>
+
+            <span>
+                Preview:
+                ${previewNames}
+                ${
+                    topicCount > 4
+                        ? "..."
+                        : ""
+                }
+            </span>
+
+            <br>
+
+            <span>
+                Duplicate topics/subtopics already present in this subject
+                will be skipped.
+            </span>
+        `;
+}
+
+
+// -----------------------------------------------------
+// IMPORT TO SUPABASE
+// -----------------------------------------------------
+
+async function importBulkTopics() {
+
+    if (
+        !bulkImportSectionId ||
+        !bulkImportSubjectId
+    ) {
+        return;
+    }
+
+
+    const parsed =
+        parseBulkImportText(
+            bulkImportText.value
+        );
+
+
+    if (
+        parsed.length === 0
+    ) {
+
+        alert(
+            "Paste at least one topic."
+        );
+
+
+        return;
+    }
+
+
+    const subject =
+        findSubject(
+            bulkImportSectionId,
+            bulkImportSubjectId
+        );
+
+
+    if (!subject) {
+
+        alert(
+            "Subject could not be found."
+        );
+
+
+        return;
+    }
+
+
+    const confirmed =
+        confirm(
+            `Import ${parsed.length} topics into "${subject.name}"?\n\nExisting duplicates will be skipped.`
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    importBulkTopicsButton.disabled =
+        true;
+
+
+    importBulkTopicsButton.textContent =
+        "Importing...";
+
+
+    try {
+
+        // =============================================
+        // EXISTING TOPIC MAP
+        // =============================================
+
+        const topicByKey =
+            new Map();
+
+
+        subject.topics.forEach(
+            topic => {
+
+                topicByKey.set(
+                    importNameKey(
+                        topic.name
+                    ),
+                    topic
+                );
+
+            }
+        );
+
+
+        // =============================================
+        // NEW TOPICS TO INSERT
+        // =============================================
+
+        const missingTopics =
+            [];
+
+
+        parsed.forEach(
+            topic => {
+
+                const key =
+                    importNameKey(
+                        topic.name
+                    );
+
+
+                if (
+                    !topicByKey.has(
+                        key
+                    )
+                ) {
+
+                    missingTopics.push(
+                        topic
+                    );
+
+                }
+
+            }
+        );
+
+
+        if (
+            missingTopics.length >
+            0
+        ) {
+
+            const topicRows =
+                missingTopics.map(
+                    (
+                        topic,
+                        index
+                    ) => ({
+
+                        user_id:
+                            currentUserId,
+
+                        subject_id:
+                            bulkImportSubjectId,
+
+                        name:
+                            topic.name,
+
+                        position:
+                            subject.topics.length +
+                            index,
+
+                        completed:
+                            false
+
+                    })
+                );
+
+
+            const {
+                data:
+                    insertedTopics,
+
+                error:
+                    topicInsertError
+            } =
+            await supabaseClient
+                .from(
+                    "topics"
+                )
+                .insert(
+                    topicRows
+                )
+                .select(
+                    "id,name,position,completed"
+                );
+
+
+            if (
+                topicInsertError
+            ) {
+
+                throw topicInsertError;
+
+            }
+
+
+            (
+                insertedTopics ||
+                []
+            )
+                .forEach(
+                    topic => {
+
+                        topicByKey.set(
+                            importNameKey(
+                                topic.name
+                            ),
+                            {
+                                ...topic,
+                                subtopics:
+                                    []
+                            }
+                        );
+
+                    }
+                );
+
+        }
+
+
+        // =============================================
+        // BUILD SUBTOPICS TO INSERT
+        // =============================================
+
+        const newSubtopicRows =
+            [];
+
+
+        let skippedTopicDuplicates =
+            parsed.length -
+            missingTopics.length;
+
+
+        let skippedSubtopicDuplicates =
+            0;
+
+
+        parsed.forEach(
+            parsedTopic => {
+
+                const topic =
+                    topicByKey.get(
+                        importNameKey(
+                            parsedTopic.name
+                        )
+                    );
+
+
+                if (!topic) {
+                    return;
+                }
+
+
+                const existingSubtopics =
+                    topic.subtopics ||
+                    [];
+
+
+                const existingKeys =
+                    new Set(
+                        existingSubtopics.map(
+                            subtopic =>
+                                importNameKey(
+                                    subtopic.name
+                                )
+                        )
+                    );
+
+
+                let nextPosition =
+                    existingSubtopics.length;
+
+
+                parsedTopic
+                    .subtopics
+                    .forEach(
+                        subtopicName => {
+
+                            const key =
+                                importNameKey(
+                                    subtopicName
+                                );
+
+
+                            if (
+                                existingKeys.has(
+                                    key
+                                )
+                            ) {
+
+                                skippedSubtopicDuplicates++;
+
+                                return;
+                            }
+
+
+                            existingKeys.add(
+                                key
+                            );
+
+
+                            newSubtopicRows.push(
+                                {
+
+                                    user_id:
+                                        currentUserId,
+
+                                    topic_id:
+                                        topic.id,
+
+                                    name:
+                                        subtopicName,
+
+                                    position:
+                                        nextPosition++,
+
+                                    completed:
+                                        false
+
+                                }
+                            );
+
+                        }
+                    );
+
+            }
+        );
+
+
+        // =============================================
+        // INSERT ALL MISSING SUBTOPICS
+        // =============================================
+
+        if (
+            newSubtopicRows.length >
+            0
+        ) {
+
+            const {
+                error:
+                    subtopicInsertError
+            } =
+            await supabaseClient
+                .from(
+                    "subtopics"
+                )
+                .insert(
+                    newSubtopicRows
+                );
+
+
+            if (
+                subtopicInsertError
+            ) {
+
+                throw subtopicInsertError;
+
+            }
+
+        }
+
+
+        // =============================================
+        // REFRESH SUBJECTS PAGE
+        // =============================================
+
+        closeBulkImport();
+
+
+        await loadCloudData();
+
+
+        alert(
+            `Bulk import complete ✅\n\n` +
+            `New topics: ${missingTopics.length}\n` +
+            `New subtopics: ${newSubtopicRows.length}\n` +
+            `Skipped existing topics: ${skippedTopicDuplicates}\n` +
+            `Skipped existing subtopics: ${skippedSubtopicDuplicates}`
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Bulk topic import failed:",
+            error
+        );
+
+
+        alert(
+            "Bulk import could not be completed. No existing syllabus data was removed."
+        );
+
+    }
+
+    finally {
+
+        importBulkTopicsButton.disabled =
+            false;
+
+
+        importBulkTopicsButton.textContent =
+            "Import Topics";
+
+    }
+}
+
+
+// -----------------------------------------------------
+// BULK IMPORT EVENTS
+// -----------------------------------------------------
+
+bulkImportText.addEventListener(
+    "input",
+    updateBulkImportPreview
+);
+
+
+closeBulkImportModalButton.addEventListener(
+    "click",
+    closeBulkImport
+);
+
+
+cancelBulkImportButton.addEventListener(
+    "click",
+    closeBulkImport
+);
+
+
+importBulkTopicsButton.addEventListener(
+    "click",
+    importBulkTopics
+);
+
+
+bulkImportModal.addEventListener(
+    "click",
+    function (event) {
+
+        if (
+            event.target ===
+            bulkImportModal
+        ) {
+
+            closeBulkImport();
+
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key ===
+            "Escape" &&
+            bulkImportModal
+                .classList
+                .contains(
+                    "show"
+                )
+        ) {
+
+            closeBulkImport();
+
+        }
+
+    }
+);
 
 
 // =====================================================
