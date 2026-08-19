@@ -688,7 +688,223 @@
 
         }
 
+// =============================================
+// 7-DAY PRODUCTIVITY TREND
+// Same formula as today's card:
+// 5 points Study + 5 points Tasks
+// =============================================
 
+const trendDailyGoal =
+    Math.max(
+        1,
+        Number(
+            setting
+                ?.daily_study_goal_minutes
+            ||
+            480
+        )
+    );
+
+
+function getProductivityForDate(
+    dateString
+) {
+
+    const daySessions =
+        sessions.filter(
+            session =>
+                session.session_date ===
+                dateString
+        );
+
+
+    const dayTasks =
+        allTasks.filter(
+            task =>
+                task.task_date ===
+                dateString
+        );
+
+
+    const dayStudyMinutes =
+        daySessions.reduce(
+            (
+                total,
+                session
+            ) =>
+                total +
+                Number(
+                    session.duration_minutes ||
+                    0
+                ),
+            0
+        );
+
+
+    const completedTasks =
+        dayTasks.filter(
+            task =>
+                task.status ===
+                "Completed"
+        ).length;
+
+
+    const studyScore =
+        Math.min(
+            5,
+            (
+                dayStudyMinutes /
+                trendDailyGoal
+            ) *
+            5
+        );
+
+
+    const taskScore =
+        dayTasks.length > 0
+            ?
+            (
+                completedTasks /
+                dayTasks.length
+            ) *
+            5
+            :
+            0;
+
+
+    const productivityScore =
+        Math.min(
+            10,
+            studyScore +
+            taskScore
+        );
+
+
+    return Number(
+        productivityScore
+            .toFixed(1)
+    );
+}
+
+
+// =============================================
+// BUILD LAST 7 DAYS DATA
+// =============================================
+
+const trendLabels =
+    [];
+
+const trendScores =
+    [];
+
+
+for (
+    let offset = 6;
+    offset >= 0;
+    offset--
+) {
+
+    const trendDate =
+        new Date();
+
+
+    // Noon avoids timezone/date-edge problems
+    trendDate.setHours(
+        12,
+        0,
+        0,
+        0
+    );
+
+
+    trendDate.setDate(
+        trendDate.getDate() -
+        offset
+    );
+
+
+    const trendDateString =
+        localDate(
+            trendDate
+        );
+
+
+    const dayLabel =
+        trendDate
+            .toLocaleDateString(
+                undefined,
+                {
+                    weekday:
+                        "short"
+                }
+            );
+
+
+    trendLabels.push(
+        dayLabel
+    );
+
+
+    trendScores.push(
+        getProductivityForDate(
+            trendDateString
+        )
+    );
+}
+
+
+// =============================================
+// UPDATE PRODUCTIVITY BAR CHART
+// =============================================
+
+const productivityCanvas =
+    document.getElementById(
+        "productivityChart"
+    );
+
+
+if (
+    productivityCanvas &&
+    typeof Chart !==
+    "undefined"
+) {
+
+    const productivityChart =
+        Chart.getChart(
+            productivityCanvas
+        );
+
+
+    if (
+        productivityChart
+    ) {
+
+        productivityChart
+            .data
+            .labels =
+            trendLabels;
+
+
+        if (
+            productivityChart
+                .data
+                .datasets?.[0]
+        ) {
+
+            productivityChart
+                .data
+                .datasets[0]
+                .data =
+                trendScores;
+
+        }
+
+
+        productivityChart.update();
+
+    }
+
+}
         // =============================================
         // SUBJECT PROGRESS LOGIC
         // SAME LOGIC AS subjects.js
