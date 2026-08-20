@@ -4117,3 +4117,1027 @@ async function moveSubject(
     }
 
 }
+// =====================================================
+// PRODUCTIVE HORIZON
+// FAST BATCH PROGRESS SYSTEM
+//
+// Tick as many Subjects / Topics / Subtopics as you want.
+// NOTHING is sent to Supabase on each tick.
+//
+// Press "Save Progress" once to save everything.
+// =====================================================
+
+(function () {
+
+    // =================================================
+    // PENDING CHANGES
+    // =================================================
+
+    const pendingProgressChanges = {
+
+        subjects:
+            new Map(),
+
+        topics:
+            new Map(),
+
+        subtopics:
+            new Map()
+
+    };
+
+
+    let progressSaveInProgress =
+        false;
+
+
+    // =================================================
+    // CREATE FLOATING SAVE BUTTON
+    // =================================================
+
+    const progressSavePanel =
+        document.createElement(
+            "div"
+        );
+
+
+    progressSavePanel.id =
+        "progressSavePanel";
+
+
+    progressSavePanel.style.position =
+        "fixed";
+
+
+    progressSavePanel.style.right =
+        "24px";
+
+
+    progressSavePanel.style.bottom =
+        "24px";
+
+
+    progressSavePanel.style.zIndex =
+        "99999";
+
+
+    progressSavePanel.style.display =
+        "none";
+
+
+    progressSavePanel.style.alignItems =
+        "center";
+
+
+    progressSavePanel.style.gap =
+        "10px";
+
+
+    progressSavePanel.style.padding =
+        "10px 12px";
+
+
+    progressSavePanel.style.borderRadius =
+        "14px";
+
+
+    progressSavePanel.style.boxShadow =
+        "0 8px 28px rgba(0,0,0,.18)";
+
+
+    progressSavePanel.style.background =
+        "var(--card, #ffffff)";
+
+
+    progressSavePanel.style.border =
+        "1px solid var(--border, #ddd)";
+
+
+    progressSavePanel.innerHTML = `
+
+        <span
+            id="pendingProgressCount"
+            style="
+                font-size:12px;
+                font-weight:600;
+                white-space:nowrap;
+            "
+        >
+            0 Unsaved Changes
+        </span>
+
+
+        <button
+            id="saveProgressBatchButton"
+            type="button"
+            style="
+                border:none;
+                border-radius:10px;
+                padding:10px 14px;
+                cursor:pointer;
+                font-weight:700;
+            "
+        >
+            💾 Save Progress
+        </button>
+    `;
+
+
+    document.body.appendChild(
+        progressSavePanel
+    );
+
+
+    const pendingProgressCount =
+        document.getElementById(
+            "pendingProgressCount"
+        );
+
+
+    const saveProgressBatchButton =
+        document.getElementById(
+            "saveProgressBatchButton"
+        );
+
+
+    // =================================================
+    // COUNT CHANGES
+    // =================================================
+
+    function getPendingChangeCount() {
+
+        return (
+            pendingProgressChanges
+                .subjects
+                .size
+            +
+            pendingProgressChanges
+                .topics
+                .size
+            +
+            pendingProgressChanges
+                .subtopics
+                .size
+        );
+
+    }
+
+
+    function updateProgressSavePanel() {
+
+        const count =
+            getPendingChangeCount();
+
+
+        pendingProgressCount
+            .textContent =
+            `${count} Unsaved Change${
+                count === 1
+                    ? ""
+                    : "s"
+            }`;
+
+
+        progressSavePanel.style.display =
+            count > 0
+                ? "flex"
+                : "none";
+
+    }
+
+
+    // =================================================
+    // MARK CHANGE
+    // =================================================
+
+    function markProgressChange(
+        type,
+        id,
+        completed
+    ) {
+
+        pendingProgressChanges[
+            type
+        ].set(
+            id,
+            Boolean(
+                completed
+            )
+        );
+
+
+        updateProgressSavePanel();
+
+    }
+
+
+    // =================================================
+    // FIND SUBJECT CHECKBOX
+    // =================================================
+
+    function getSubjectCheckbox(
+        subjectId
+    ) {
+
+        const toggleButton =
+            document.getElementById(
+                `subject-toggle-${subjectId}`
+            );
+
+
+        const card =
+            toggleButton
+                ?.closest(
+                    ".subject-manager-card"
+                );
+
+
+        return card
+            ?.querySelector(
+                ".subject-main-info input[type='checkbox']"
+            )
+            ||
+            null;
+
+    }
+
+
+    // =================================================
+    // FIND TOPIC CHECKBOX
+    // =================================================
+
+    function getTopicCheckbox(
+        topicId
+    ) {
+
+        const toggleButton =
+            document.getElementById(
+                `topic-toggle-${topicId}`
+            );
+
+
+        const row =
+            toggleButton
+                ?.closest(
+                    ".topic-manager-row"
+                );
+
+
+        return row
+            ?.querySelector(
+                ".topic-name-area input[type='checkbox']"
+            )
+            ||
+            null;
+
+    }
+
+
+    // =================================================
+    // UPDATE SUBJECT PARENT STATE LOCALLY
+    // =================================================
+
+    function updateSubjectStateLocally(
+        subject
+    ) {
+
+        if (
+            !subject ||
+            subject.topics.length === 0
+        ) {
+
+            return;
+
+        }
+
+
+        const completed =
+            subject.topics.every(
+                topic =>
+                    topic.completed
+            );
+
+
+        subject.completed =
+            completed;
+
+
+        markProgressChange(
+            "subjects",
+            subject.id,
+            completed
+        );
+
+
+        const checkbox =
+            getSubjectCheckbox(
+                subject.id
+            );
+
+
+        if (checkbox) {
+
+            checkbox.checked =
+                completed;
+
+        }
+
+    }
+
+
+    // =================================================
+    // UPDATE TOPIC PARENT STATE LOCALLY
+    // =================================================
+
+    function updateTopicStateLocally(
+        topic
+    ) {
+
+        if (
+            !topic ||
+            topic.subtopics.length === 0
+        ) {
+
+            return;
+
+        }
+
+
+        const completed =
+            topic.subtopics.every(
+                subtopic =>
+                    subtopic.completed
+            );
+
+
+        topic.completed =
+            completed;
+
+
+        markProgressChange(
+            "topics",
+            topic.id,
+            completed
+        );
+
+
+        const checkbox =
+            getTopicCheckbox(
+                topic.id
+            );
+
+
+        if (checkbox) {
+
+            checkbox.checked =
+                completed;
+
+        }
+
+    }
+
+
+    // =================================================
+    // NEW FAST SUBJECT TOGGLE
+    // =================================================
+
+    window.toggleSubject =
+        function (
+            sectionId,
+            subjectId,
+            checked
+        ) {
+
+            const subject =
+                findSubject(
+                    sectionId,
+                    subjectId
+                );
+
+
+            if (!subject) {
+                return;
+            }
+
+
+            subject.completed =
+                checked;
+
+
+            markProgressChange(
+                "subjects",
+                subjectId,
+                checked
+            );
+
+
+            // =========================================
+            // UPDATE ALL TOPICS
+            // =========================================
+
+            subject.topics.forEach(
+                function (
+                    topic
+                ) {
+
+                    topic.completed =
+                        checked;
+
+
+                    markProgressChange(
+                        "topics",
+                        topic.id,
+                        checked
+                    );
+
+
+                    const topicCheckbox =
+                        getTopicCheckbox(
+                            topic.id
+                        );
+
+
+                    if (
+                        topicCheckbox
+                    ) {
+
+                        topicCheckbox.checked =
+                            checked;
+
+                    }
+
+
+                    // =================================
+                    // UPDATE ALL SUBTOPICS
+                    // =================================
+
+                    topic.subtopics.forEach(
+                        function (
+                            subtopic
+                        ) {
+
+                            subtopic.completed =
+                                checked;
+
+
+                            markProgressChange(
+                                "subtopics",
+                                subtopic.id,
+                                checked
+                            );
+
+
+                            const subtopicRow =
+                                document
+                                    .querySelector(
+                                        `
+                                        input[
+                                            onchange*="'${subtopic.id}'"
+                                        ]
+                                        `
+                                    );
+
+
+                            if (
+                                subtopicRow
+                            ) {
+
+                                subtopicRow.checked =
+                                    checked;
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+        };
+
+
+    // =================================================
+    // NEW FAST TOPIC TOGGLE
+    // =================================================
+
+    window.toggleTopic =
+        function (
+            sectionId,
+            subjectId,
+            topicId,
+            checked
+        ) {
+
+            const subject =
+                findSubject(
+                    sectionId,
+                    subjectId
+                );
+
+
+            const topic =
+                findTopic(
+                    sectionId,
+                    subjectId,
+                    topicId
+                );
+
+
+            if (
+                !subject ||
+                !topic
+            ) {
+
+                return;
+
+            }
+
+
+            topic.completed =
+                checked;
+
+
+            markProgressChange(
+                "topics",
+                topicId,
+                checked
+            );
+
+
+            // =========================================
+            // UPDATE SUBTOPICS LOCALLY
+            // =========================================
+
+            topic.subtopics.forEach(
+                function (
+                    subtopic
+                ) {
+
+                    subtopic.completed =
+                        checked;
+
+
+                    markProgressChange(
+                        "subtopics",
+                        subtopic.id,
+                        checked
+                    );
+
+
+                    /*
+                        Find subtopic checkbox from
+                        existing onchange attribute.
+                    */
+
+                    const checkboxes =
+                        document.querySelectorAll(
+                            ".subtopic-row input[type='checkbox']"
+                        );
+
+
+                    checkboxes.forEach(
+                        function (
+                            checkbox
+                        ) {
+
+                            const onchange =
+                                checkbox
+                                    .getAttribute(
+                                        "onchange"
+                                    )
+                                ||
+                                "";
+
+
+                            if (
+                                onchange.includes(
+                                    subtopic.id
+                                )
+                            ) {
+
+                                checkbox.checked =
+                                    checked;
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+
+            // =========================================
+            // UPDATE SUBJECT STATE
+            // =========================================
+
+            updateSubjectStateLocally(
+                subject
+            );
+
+        };
+
+
+    // =================================================
+    // NEW FAST SUBTOPIC TOGGLE
+    // =================================================
+
+    window.toggleSubtopic =
+        function (
+            sectionId,
+            subjectId,
+            topicId,
+            subtopicId,
+            checked
+        ) {
+
+            const subject =
+                findSubject(
+                    sectionId,
+                    subjectId
+                );
+
+
+            const topic =
+                findTopic(
+                    sectionId,
+                    subjectId,
+                    topicId
+                );
+
+
+            const subtopic =
+                findSubtopic(
+                    sectionId,
+                    subjectId,
+                    topicId,
+                    subtopicId
+                );
+
+
+            if (
+                !subject ||
+                !topic ||
+                !subtopic
+            ) {
+
+                return;
+
+            }
+
+
+            subtopic.completed =
+                checked;
+
+
+            markProgressChange(
+                "subtopics",
+                subtopicId,
+                checked
+            );
+
+
+            // =========================================
+            // UPDATE TOPIC STATE
+            // =========================================
+
+            updateTopicStateLocally(
+                topic
+            );
+
+
+            // =========================================
+            // UPDATE SUBJECT STATE
+            // =========================================
+
+            updateSubjectStateLocally(
+                subject
+            );
+
+        };
+
+
+    // =================================================
+    // SAVE IDS BY COMPLETION VALUE
+    // =================================================
+
+    async function saveMapToCloud(
+        table,
+        map
+    ) {
+
+        const completedIds =
+            [];
+
+
+        const incompleteIds =
+            [];
+
+
+        map.forEach(
+            function (
+                completed,
+                id
+            ) {
+
+                if (
+                    completed
+                ) {
+
+                    completedIds.push(
+                        id
+                    );
+
+                }
+
+                else {
+
+                    incompleteIds.push(
+                        id
+                    );
+
+                }
+
+            }
+        );
+
+
+        // =============================================
+        // SAVE CHECKED
+        // =============================================
+
+        if (
+            completedIds.length >
+            0
+        ) {
+
+            const {
+                error
+            } =
+            await supabaseClient
+                .from(
+                    table
+                )
+                .update({
+
+                    completed:
+                        true
+
+                })
+                .in(
+                    "id",
+                    completedIds
+                )
+                .eq(
+                    "user_id",
+                    currentUserId
+                );
+
+
+            if (error) {
+
+                throw error;
+
+            }
+
+        }
+
+
+        // =============================================
+        // SAVE UNCHECKED
+        // =============================================
+
+        if (
+            incompleteIds.length >
+            0
+        ) {
+
+            const {
+                error
+            } =
+            await supabaseClient
+                .from(
+                    table
+                )
+                .update({
+
+                    completed:
+                        false
+
+                })
+                .in(
+                    "id",
+                    incompleteIds
+                )
+                .eq(
+                    "user_id",
+                    currentUserId
+                );
+
+
+            if (error) {
+
+                throw error;
+
+            }
+
+        }
+
+    }
+
+
+    // =================================================
+    // SAVE ALL PROGRESS
+    // =================================================
+
+    async function saveAllPendingProgress() {
+
+        if (
+            progressSaveInProgress
+        ) {
+
+            return;
+
+        }
+
+
+        const count =
+            getPendingChangeCount();
+
+
+        if (
+            count === 0
+        ) {
+
+            return;
+
+        }
+
+
+        progressSaveInProgress =
+            true;
+
+
+        saveProgressBatchButton.disabled =
+            true;
+
+
+        saveProgressBatchButton.textContent =
+            "Saving...";
+
+
+        try {
+
+            /*
+                Maximum requests:
+
+                Subjects checked
+                Subjects unchecked
+
+                Topics checked
+                Topics unchecked
+
+                Subtopics checked
+                Subtopics unchecked
+
+                So even 100 ticks =
+                maximum around 6 update requests.
+            */
+
+
+            await saveMapToCloud(
+                "subjects",
+                pendingProgressChanges
+                    .subjects
+            );
+
+
+            await saveMapToCloud(
+                "topics",
+                pendingProgressChanges
+                    .topics
+            );
+
+
+            await saveMapToCloud(
+                "subtopics",
+                pendingProgressChanges
+                    .subtopics
+            );
+
+
+            // =========================================
+            // CLEAR PENDING CHANGES
+            // =========================================
+
+            pendingProgressChanges
+                .subjects
+                .clear();
+
+
+            pendingProgressChanges
+                .topics
+                .clear();
+
+
+            pendingProgressChanges
+                .subtopics
+                .clear();
+
+
+            updateProgressSavePanel();
+
+
+            // =========================================
+            // ONLY ONE CLOUD RELOAD
+            // =========================================
+
+            await loadCloudData();
+
+
+            console.log(
+                "Batch progress saved successfully"
+            );
+
+        }
+
+        catch (
+            error
+        ) {
+
+            console.error(
+                "Batch progress save failed:",
+                error
+            );
+
+
+            alert(
+                "Progress could not be saved. Your unsaved changes are still available — press Save Progress again."
+            );
+
+        }
+
+        finally {
+
+            progressSaveInProgress =
+                false;
+
+
+            saveProgressBatchButton.disabled =
+                false;
+
+
+            saveProgressBatchButton.textContent =
+                "💾 Save Progress";
+
+        }
+
+    }
+
+
+    // =================================================
+    // SAVE BUTTON
+    // =================================================
+
+    saveProgressBatchButton
+        .addEventListener(
+            "click",
+            saveAllPendingProgress
+        );
+
+
+    // =================================================
+    // WARN BEFORE LEAVING WITH UNSAVED CHANGES
+    // =================================================
+
+    window.addEventListener(
+        "beforeunload",
+        function (
+            event
+        ) {
+
+            if (
+                getPendingChangeCount() ===
+                0
+            ) {
+
+                return;
+
+            }
+
+
+            event.preventDefault();
+
+
+            event.returnValue =
+                "";
+
+        }
+    );
+
+
+    console.log(
+        "Fast Batch Progress System ready"
+    );
+
+})();
