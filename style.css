@@ -1281,48 +1281,63 @@ select {
     }
 }
 /* =====================================================
-   SIDEBAR SCROLL FIX
+   FINAL SIDEBAR SCROLL FIX
 ===================================================== */
 
 .sidebar {
-    height: 100vh;
-    position: sticky;
-    top: 0;
+    height: 100vh !important;
+    max-height: 100vh !important;
 
-    display: flex;
-    flex-direction: column;
+    position: sticky !important;
+    top: 0 !important;
 
-    overflow: hidden;
-}
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
 
-/* Sidebar menu scrollable */
-.sidebar nav {
-    flex: 1;
-    min-height: 0;
-
-    overflow-y: auto;
-    overflow-x: hidden;
+    display: block !important;
 
     padding-bottom: 20px;
-
-    scrollbar-width: thin;
 }
 
-/* Chrome / Edge scrollbar */
-.sidebar nav::-webkit-scrollbar {
-    width: 5px;
+/* Nav ko alag se lock/scroll mat karo */
+.sidebar nav {
+    display: block !important;
+
+    height: auto !important;
+    max-height: none !important;
+
+    overflow: visible !important;
+
+    padding-bottom: 15px;
 }
 
-.sidebar nav::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 10px;
+/* Settings normal flow me neeche rahe */
+.sidebar-bottom {
+    position: static !important;
+
+    margin-top: 15px;
+    padding-bottom: 20px;
 }
 
-.sidebar nav::-webkit-scrollbar-track {
+/* Chrome / Edge / Brave */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
     background: transparent;
 }
 
-/* Settings stays at bottom */
-.sidebar-bottom {
-    flex-shrink: 0;
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(150, 150, 160, 0.35);
+    border-radius: 20px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(150, 150, 160, 0.6);
+}
+
+/* Firefox */
+.sidebar {
+    scrollbar-width: thin;
 }
