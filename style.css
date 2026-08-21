@@ -1281,45 +1281,70 @@ select {
     }
 }
 /* =====================================================
-   FINAL SIDEBAR SCROLL FIX
+   FINAL SIDEBAR FIX
+   Fixed sidebar + independent scrolling + no page gap
 ===================================================== */
 
 .sidebar {
+    width: 245px !important;
+
     height: 100vh !important;
     max-height: 100vh !important;
 
-    position: sticky !important;
+    position: fixed !important;
+    left: 0 !important;
     top: 0 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
 
     overflow-y: auto !important;
     overflow-x: hidden !important;
 
-    display: block !important;
+    padding: 26px 18px !important;
 
-    padding-bottom: 20px;
+    z-index: 50;
 }
 
-/* Nav ko alag se lock/scroll mat karo */
+
+/* NAV SHOULD FLOW NORMALLY INSIDE SIDEBAR */
+
 .sidebar nav {
     display: block !important;
 
+    flex: none !important;
+
     height: auto !important;
+    min-height: auto !important;
     max-height: none !important;
 
     overflow: visible !important;
 
-    padding-bottom: 15px;
+    padding-bottom: 12px;
 }
 
-/* Settings normal flow me neeche rahe */
+
+/* SETTINGS / BOTTOM AREA */
+
 .sidebar-bottom {
     position: static !important;
 
-    margin-top: 15px;
+    flex: none !important;
+
+    margin-top: 10px;
     padding-bottom: 20px;
 }
 
-/* Chrome / Edge / Brave */
+
+/* MAIN CONTENT STAYS BESIDE SIDEBAR */
+
+.main {
+    margin-left: 245px !important;
+}
+
+
+/* SIDEBAR SCROLLBAR */
+
 .sidebar::-webkit-scrollbar {
     width: 6px;
 }
@@ -1337,32 +1362,21 @@ select {
     background: rgba(150, 150, 160, 0.6);
 }
 
-/* Firefox */
 .sidebar {
     scrollbar-width: thin;
 }
-/* =====================================================
-   FIX EXTRA VERTICAL SPACE / CONTENT CENTERING
-===================================================== */
 
-.main {
-    min-height: 100vh !important;
-    height: auto !important;
 
-    display: block !important;
+/* MOBILE */
 
-    padding-top: 32px !important;
+@media (max-width: 750px) {
 
-    overflow: visible !important;
-}
+    .sidebar {
+        display: none !important;
+    }
 
-/* Main content should always start from top */
-.app {
-    align-items: flex-start !important;
-}
+    .main {
+        margin-left: 0 !important;
+    }
 
-/* Timer page must not vertically center content */
-.main > header {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
 }
