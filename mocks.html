@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1.0"
+>
+
+<title>
+    Mock Performance | Productive Horizon
+</title>
+
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+
+<link
+    rel="stylesheet"
+    href="modules.css"
+>
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
+
+
+<style>
+
+.mock-section-title {
+    grid-column: 1 / -1;
+
+    margin-top: 8px;
+    padding-top: 12px;
+
+    border-top:
+        1px solid
+        var(--border);
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+
+.mock-verdict {
+    padding: 18px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 14px;
+
+    background:
+        var(--card);
+}
+
+
+.mock-verdict h2 {
+    margin: 4px 0;
+}
+
+
+.mock-intelligence-grid {
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(4,minmax(0,1fr));
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+}
+
+
+.mock-mini {
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 12px;
+
+    padding: 14px;
+
+    background:
+        var(--card);
+}
+
+
+.mock-mini p {
+    font-size: 11px;
+    color: var(--secondary);
+}
+
+
+.mock-mini strong {
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 22px;
+}
+
+
+.mock-chart-box {
+    height: 340px;
+
+    margin-top: 14px;
+}
+
+
+.mock-section-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,minmax(0,1fr));
+
+    gap: 10px;
+}
+
+
+.mock-history-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+
+    margin-top: 7px;
+}
+
+
+.mock-chip {
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 20px;
+
+    padding:
+        4px
+        8px;
+
+    font-size: 11px;
+
+    background:
+        var(--background);
+}
+
+
+@media(max-width:900px) {
+
+    .mock-intelligence-grid {
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+    }
+
+
+    .mock-section-grid {
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+    }
+
+}
+
+
+@media(max-width:600px) {
+
+    .mock-intelligence-grid,
+    .mock-section-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+
+<div class="logo">
+
+<div class="logo-icon">
+PH
+</div>
+
+<div>
+
+<h2>
+Productive
+</h2>
+
+<span>
+Horizon
+</span>
+
+</div>
+
+</div>
+
+
+<nav>
+
+<p class="nav-title">
+WORKSPACE
+</p>
+
+<a class="nav-item" href="index.html">
+    <i class="fa-solid fa-chart-pie"></i>
+    Dashboard
+</a>
+
+<a class="nav-item" href="index.html#tasks">
+    <i class="fa-solid fa-list-check"></i>
+    Tasks
+</a>
+
+<a class="nav-item" href="subjects.html">
+    <i class="fa-solid fa-book"></i>
+    Subjects
+</a>
+
+<a class="nav-item" href="planner.html">
+    <i class="fa-solid fa-calendar"></i>
+    Planner
+</a>
+
+<a class="nav-item" href="timer.html">
+    <i class="fa-solid fa-clock"></i>
+    Study Timer
+</a>
+
+
+<p class="nav-title">
+PROGRESS
+</p>
+
+<a class="nav-item" href="analytics.html">
+    <i class="fa-solid fa-chart-line"></i>
+    Analytics
+</a>
+
+<a class="nav-item" href="pyq.html">
+    <i class="fa-solid fa-file-circle-question"></i>
+    PYQ Tracker
+</a>
+
+<a class="nav-item" href="mistakes.html">
+    <i class="fa-solid fa-book-skull"></i>
+    Mistake Notebook
+</a>
+
+<a class="nav-item active" href="mocks.html">
+    <i class="fa-solid fa-chart-column"></i>
+    Mock Performance
+</a>
+
+<a class="nav-item" href="daily-performance.html">
+    <i class="fa-solid fa-bullseye"></i>
+    Target vs Actual
+</a>
+
+<a class="nav-item" href="revisions.html">
+    <i class="fa-solid fa-rotate"></i>
+    Revisions
+</a>
+
+<a class="nav-item" href="weak-topics.html">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    Weak Topics
+</a>
+
+<a class="nav-item" href="journal.html">
+    <i class="fa-solid fa-book-open"></i>
+    Journal
+</a>
+
+</nav>
+
+
+<div class="sidebar-bottom">
+
+<a
+    href="settings.html"
+    class="nav-item"
+>
+
+<i class="fa-solid fa-gear"></i>
+
+Settings
+
+</a>
+
+</div>
+
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+
+<header>
+
+<div>
+
+<p class="small-text">
+MOCK INTELLIGENCE
+</p>
+
+<h1>
+Mock Performance 📊
+</h1>
+
+<p class="subtitle">
+Track whether your mock scores are actually moving toward your target.
+</p>
+
+</div>
+
+
+<div class="header-actions">
+
+<button
+    id="moduleThemeButton"
+    class="icon-button"
+    type="button"
+>
+🌙
+</button>
+
+</div>
+
+</header>
+
+
+<!-- INTELLIGENCE -->
+
+<section class="mock-intelligence-grid">
+
+
+<div class="mock-mini">
+
+<p>
+Target Score
+</p>
+
+<strong id="mockTargetCard">
+—
+</strong>
+
+</div>
+
+
+<div class="mock-mini">
+
+<p>
+Latest Score
+</p>
+
+<strong id="mockLatestCard">
+—
+</strong>
+
+</div>
+
+
+<div class="mock-mini">
+
+<p>
+Last 5 Average
+</p>
+
+<strong id="mockAverageCard">
+—
+</strong>
+
+</div>
+
+
+<div class="mock-mini">
+
+<p>
+Gap To Target
+</p>
+
+<strong id="mockGapCard">
+—
+</strong>
+
+</div>
+
+
+</section>
+
+
+<section class="mock-verdict">
+
+<p class="small-text">
+PREPARATION STATUS
+</p>
+
+<h2 id="mockVerdict">
+No mock data yet
+</h2>
+
+<p id="mockVerdictDetail">
+Save your first mock to start analysis.
+</p>
+
+</section>
+
+
+<!-- FORM -->
+
+<section class="module-panel">
+
+
+<form
+    id="mockForm"
+    class="module-form-grid"
+>
+
+
+<div class="mock-section-title">
+
+Mock Information
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Mock Name
+</label>
+
+<input
+    id="mockName"
+    class="module-input"
+    placeholder="e.g. Testbook Mock 01"
+    required
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Date
+</label>
+
+<input
+    id="mockDate"
+    type="date"
+    class="module-input"
+    required
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Source
+</label>
+
+<input
+    id="mockSource"
+    class="module-input"
+    value="Testbook"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Mock Type
+</label>
+
+<select
+    id="mockType"
+    class="module-select"
+>
+
+<option>
+Full Mock
+</option>
+
+<option>
+Sectional Mock
+</option>
+
+<option>
+Previous Year Paper
+</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Difficulty
+</label>
+
+<select
+    id="mockDifficulty"
+    class="module-select"
+>
+
+<option>
+Easy
+</option>
+
+<option selected>
+Moderate
+</option>
+
+<option>
+Hard
+</option>
+
+</select>
+
+</div>
+
+
+<div class="mock-section-title">
+
+Score & Target
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Maximum Marks
+</label>
+
+<input
+    id="mockMaximum"
+    type="number"
+    class="module-input"
+    value="200"
+    step="0.01"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Target Score
+</label>
+
+<input
+    id="mockTarget"
+    type="number"
+    class="module-input"
+    value="150"
+    step="0.01"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Score Obtained
+</label>
+
+<input
+    id="mockScore"
+    type="number"
+    class="module-input"
+    value="0"
+    step="0.01"
+    required
+>
+
+</div>
+
+
+<div class="mock-section-title">
+
+Questions & Time
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Total Questions
+</label>
+
+<input
+    id="mockTotalQuestions"
+    type="number"
+    class="module-input"
+    value="200"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Attempted
+</label>
+
+<input
+    id="mockAttempted"
+    type="number"
+    class="module-input"
+    value="0"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Correct
+</label>
+
+<input
+    id="mockCorrect"
+    type="number"
+    class="module-input"
+    value="0"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Wrong
+</label>
+
+<input
+    id="mockWrong"
+    type="number"
+    class="module-input"
+    value="0"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Time Taken (minutes)
+</label>
+
+<input
+    id="mockTime"
+    type="number"
+    class="module-input"
+    value="120"
+    step="0.1"
+>
+
+</div>
+
+
+<div class="mock-section-title">
+
+Testbook Optional Data
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Rank
+</label>
+
+<input
+    id="mockRank"
+    type="number"
+    class="module-input"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Percentile
+</label>
+
+<input
+    id="mockPercentile"
+    type="number"
+    class="module-input"
+    step="0.01"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Average Score
+</label>
+
+<input
+    id="mockPlatformAverage"
+    type="number"
+    class="module-input"
+    step="0.01"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Topper Score
+</label>
+
+<input
+    id="mockTopper"
+    type="number"
+    class="module-input"
+    step="0.01"
+>
+
+</div>
+
+
+<div class="mock-section-title">
+
+Section-wise Score
+
+</div>
+
+
+<div class="full mock-section-grid">
+
+
+<div>
+
+<label class="module-label">
+General Awareness
+</label>
+
+<input
+    id="mockGS"
+    type="number"
+    class="module-input"
+    value="0"
+    step="0.01"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Reasoning
+</label>
+
+<input
+    id="mockReasoning"
+    type="number"
+    class="module-input"
+    value="0"
+    step="0.01"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Maths
+</label>
+
+<input
+    id="mockMaths"
+    type="number"
+    class="module-input"
+    value="0"
+    step="0.01"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+English
+</label>
+
+<input
+    id="mockEnglish"
+    type="number"
+    class="module-input"
+    value="0"
+    step="0.01"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Hindi
+</label>
+
+<input
+    id="mockHindi"
+    type="number"
+    class="module-input"
+    value="0"
+    step="0.01"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Computer Science
+</label>
+
+<input
+    id="mockCS"
+    type="number"
+    class="module-input"
+    value="0"
+    step="0.01"
+>
+
+</div>
+
+
+</div>
+
+
+<div class="mock-section-title">
+
+Mistake Analysis
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Silly Mistakes
+</label>
+
+<input
+    id="mockSilly"
+    type="number"
+    class="module-input"
+    value="0"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Concept Errors
+</label>
+
+<input
+    id="mockConcept"
+    type="number"
+    class="module-input"
+    value="0"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Calculation Errors
+</label>
+
+<input
+    id="mockCalculation"
+    type="number"
+    class="module-input"
+    value="0"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Question Misread
+</label>
+
+<input
+    id="mockMisread"
+    type="number"
+    class="module-input"
+    value="0"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Guessing Errors
+</label>
+
+<input
+    id="mockGuess"
+    type="number"
+    class="module-input"
+    value="0"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Time-pressure Errors
+</label>
+
+<input
+    id="mockPressure"
+    type="number"
+    class="module-input"
+    value="0"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Unknown Concepts
+</label>
+
+<input
+    id="mockUnknown"
+    type="number"
+    class="module-input"
+    value="0"
+>
+
+</div>
+
+
+<div class="mock-section-title">
+
+Self Review (1–10)
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Focus
+</label>
+
+<input
+    id="mockFocus"
+    type="number"
+    min="1"
+    max="10"
+    class="module-input"
+    value="7"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Confidence
+</label>
+
+<input
+    id="mockConfidence"
+    type="number"
+    min="1"
+    max="10"
+    class="module-input"
+    value="7"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Time Management
+</label>
+
+<input
+    id="mockTimeManagement"
+    type="number"
+    min="1"
+    max="10"
+    class="module-input"
+    value="7"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Overall Satisfaction
+</label>
+
+<input
+    id="mockSatisfaction"
+    type="number"
+    min="1"
+    max="10"
+    class="module-input"
+    value="7"
+>
+
+</div>
+
+
+<div class="mock-section-title">
+
+Post-Mock Analysis
+
+</div>
+
+
+<div class="full">
+
+<label class="module-label">
+Strong Areas
+</label>
+
+<textarea
+    id="mockStrongAreas"
+    class="module-textarea"
+></textarea>
+
+</div>
+
+
+<div class="full">
+
+<label class="module-label">
+Weak Areas
+</label>
+
+<textarea
+    id="mockWeakAreas"
+    class="module-textarea"
+></textarea>
+
+</div>
+
+
+<div class="full">
+
+<label class="module-label">
+Topics To Revise
+</label>
+
+<textarea
+    id="mockRevise"
+    class="module-textarea"
+></textarea>
+
+</div>
+
+
+<div class="full">
+
+<label class="module-label">
+Topics Needing Practice / PYQs
+</label>
+
+<textarea
+    id="mockPractice"
+    class="module-textarea"
+></textarea>
+
+</div>
+
+
+<div class="full">
+
+<label class="module-label">
+Lesson Learned
+</label>
+
+<textarea
+    id="mockLessons"
+    class="module-textarea"
+></textarea>
+
+</div>
+
+
+<div class="full">
+
+<button
+    type="submit"
+    class="module-btn primary"
+>
+
+💾 Save Mock Performance
+
+</button>
+
+</div>
+
+
+</form>
+
+</section>
+
+
+<!-- AUTO METRICS -->
+
+<section class="module-panel">
+
+<div class="panel-header">
+
+<div>
+
+<h3>
+Performance Intelligence
+</h3>
+
+<p>
+Automatically calculated from your mock history.
+</p>
+
+</div>
+
+</div>
+
+
+<section class="mock-intelligence-grid">
+
+
+<div class="mock-mini">
+<p>Accuracy</p>
+<strong id="mockAccuracy">0%</strong>
+</div>
+
+
+<div class="mock-mini">
+<p>Attempt Rate</p>
+<strong id="mockAttemptRate">0%</strong>
+</div>
+
+
+<div class="mock-mini">
+<p>Best Score</p>
+<strong id="mockBest">—</strong>
+</div>
+
+
+<div class="mock-mini">
+<p>Average Score</p>
+<strong id="mockOverallAverage">—</strong>
+</div>
+
+
+<div class="mock-mini">
+<p>Last 3 Average</p>
+<strong id="mockLast3">—</strong>
+</div>
+
+
+<div class="mock-mini">
+<p>Improvement</p>
+<strong id="mockImprovement">—</strong>
+</div>
+
+
+<div class="mock-mini">
+<p>Marks / Minute</p>
+<strong id="mockMarksMinute">—</strong>
+</div>
+
+
+<div class="mock-mini">
+<p>Avg Sec / Question</p>
+<strong id="mockSecondsQuestion">—</strong>
+</div>
+
+
+</section>
+
+
+<div class="mock-chart-box">
+
+<canvas id="mockTrendChart"></canvas>
+
+</div>
+
+</section>
+
+
+<!-- HISTORY -->
+
+<section class="module-panel">
+
+<div class="panel-header">
+
+<div>
+
+<h3>
+Mock History
+</h3>
+
+<p>
+Your previous Testbook/mock results.
+</p>
+
+</div>
+
+</div>
+
+
+<div id="mockHistory"></div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="supabase.js"></script>
+
+<script src="protected.js"></script>
+
+<script src="module-common.js"></script>
+
+<script src="mocks.js"></script>
+
+
+</body>
+
+</html>

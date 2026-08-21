@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1.0"
+>
+
+<title>
+    Mistake Notebook | Productive Horizon
+</title>
+
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+
+<link
+    rel="stylesheet"
+    href="modules.css"
+>
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
+
+<style>
+
+/* =====================================================
+   MISTAKE NOTEBOOK - FIXED RESPONSIVE LAYOUT
+===================================================== */
+
+#mnList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+
+/* EACH MISTAKE = FULL WIDTH CARD */
+
+#mnList .module-row {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+    gap: 16px;
+
+    width: 100%;
+    min-width: 0;
+
+    align-items: start;
+
+    padding: 18px;
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    background: var(--card);
+}
+
+
+/* CHECKBOX */
+
+#mnList .module-row > input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 3px;
+}
+
+
+/* MAIN CONTENT */
+
+#mnList .module-row-main {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+
+#mnList .module-row-main > strong {
+    display: block;
+
+    width: 100%;
+
+    font-size: 15px;
+    line-height: 1.4;
+
+    word-break: normal;
+    overflow-wrap: anywhere;
+}
+
+
+#mnList .module-row-main > span {
+    display: block;
+
+    width: 100%;
+
+    font-size: 12px;
+    line-height: 1.6;
+
+    opacity: 0.75;
+
+    word-break: normal;
+    overflow-wrap: anywhere;
+}
+
+
+/* QUESTION */
+
+.mistake-question {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+
+    margin-top: 10px;
+    padding: 12px 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: var(--background);
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+
+/* ANSWER / CONCEPT GRID */
+
+.mistake-details {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+
+    width: 100%;
+    min-width: 0;
+
+    margin-top: 10px;
+}
+
+
+.mistake-detail {
+    min-width: 0;
+
+    padding: 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+
+.mistake-detail strong {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 12px;
+}
+
+
+/* RIGHT ACTIONS */
+
+.mistake-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    min-width: 115px;
+}
+
+
+.mistake-actions .module-btn {
+    width: 100%;
+
+    white-space: nowrap;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1000px) {
+
+    #mnList .module-row {
+        grid-template-columns:
+            26px minmax(0, 1fr);
+    }
+
+
+    .mistake-actions {
+        grid-column: 2;
+
+        flex-direction: row;
+
+        min-width: 0;
+
+        width: 100%;
+    }
+
+
+    .mistake-actions .module-btn {
+        width: auto;
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE / SMALL SCREEN
+===================================================== */
+
+@media (max-width: 700px) {
+
+    #mnList .module-row {
+        grid-template-columns: 1fr;
+
+        padding: 14px;
+    }
+
+
+    #mnList .module-row > input[type="checkbox"] {
+        grid-column: 1;
+    }
+
+
+    #mnList .module-row-main {
+        grid-column: 1;
+    }
+
+
+    .mistake-details {
+        grid-template-columns: 1fr;
+    }
+
+
+    .mistake-actions {
+        grid-column: 1;
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        width: 100%;
+    }
+
+
+    .mistake-actions .module-btn {
+        width: 100%;
+    }
+
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<div class="logo-icon">
+PH
+</div>
+
+<div>
+<h2>Productive</h2>
+<span>Horizon</span>
+</div>
+
+</div>
+
+
+<nav>
+
+<p class="nav-title">
+WORKSPACE
+</p>
+
+<a class="nav-item" href="index.html">
+    <i class="fa-solid fa-chart-pie"></i>
+    Dashboard
+</a>
+
+<a class="nav-item" href="index.html#tasks">
+    <i class="fa-solid fa-list-check"></i>
+    Tasks
+</a>
+
+<a class="nav-item" href="subjects.html">
+    <i class="fa-solid fa-book"></i>
+    Subjects
+</a>
+
+<a class="nav-item" href="planner.html">
+    <i class="fa-solid fa-calendar"></i>
+    Planner
+</a>
+
+<a class="nav-item" href="timer.html">
+    <i class="fa-solid fa-clock"></i>
+    Study Timer
+</a>
+
+
+<p class="nav-title">
+PROGRESS
+</p>
+
+<a class="nav-item" href="analytics.html">
+    <i class="fa-solid fa-chart-line"></i>
+    Analytics
+</a>
+
+<a class="nav-item" href="pyq.html">
+    <i class="fa-solid fa-file-circle-question"></i>
+    PYQ Tracker
+</a>
+
+<a class="nav-item active" href="mistakes.html">
+    <i class="fa-solid fa-book-skull"></i>
+    Mistake Notebook
+</a>
+
+<a class="nav-item" href="mocks.html">
+    <i class="fa-solid fa-chart-column"></i>
+    Mock Performance
+</a>
+
+<a class="nav-item" href="daily-performance.html">
+    <i class="fa-solid fa-bullseye"></i>
+    Target vs Actual
+</a>
+
+<a class="nav-item" href="revisions.html">
+    <i class="fa-solid fa-rotate"></i>
+    Revisions
+</a>
+
+<a class="nav-item" href="weak-topics.html">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    Weak Topics
+</a>
+
+<a class="nav-item" href="journal.html">
+    <i class="fa-solid fa-book-open"></i>
+    Journal
+</a>
+
+</nav>
+
+
+<div class="sidebar-bottom">
+
+<a class="nav-item" href="settings.html">
+<i class="fa-solid fa-gear"></i>
+Settings
+</a>
+
+</div>
+
+</aside>
+
+
+<main class="main">
+
+
+<header>
+
+<div>
+
+<p class="small-text">
+ERROR ANALYSIS
+</p>
+
+<h1>
+Mistake Notebook 📕
+</h1>
+
+<p class="subtitle">
+Record the question, mistake, correct concept and exam trap.
+</p>
+
+</div>
+
+<div class="header-actions">
+
+<button
+    class="icon-button"
+    id="moduleThemeButton"
+    type="button"
+>
+🌙
+</button>
+
+</div>
+
+</header>
+
+
+<section class="module-panel">
+
+<form
+    id="mistakeNotebookForm"
+    class="module-form-grid"
+>
+
+
+<div>
+
+<label class="module-label">
+Subject
+</label>
+
+<select
+    id="mnSubject"
+    class="module-select"
+    required
+></select>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Topic
+</label>
+
+<select
+    id="mnTopic"
+    class="module-select"
+    required
+></select>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Source
+</label>
+
+<select
+    id="mnSource"
+    class="module-select"
+>
+
+<option>PYQ</option>
+<option>Mock</option>
+<option>Practice Set</option>
+<option>Revision</option>
+<option>Class</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Error Type
+</label>
+
+<select
+    id="mnErrorType"
+    class="module-select"
+>
+
+<option>Concept Error</option>
+<option>Silly Mistake</option>
+<option>Calculation Error</option>
+<option>Question Misread</option>
+<option>Forgot Formula</option>
+<option>Guessing Error</option>
+<option>Time Pressure</option>
+<option>New Concept</option>
+
+</select>
+
+</div>
+
+
+<div class="full">
+
+<label class="module-label">
+Question / Short Description
+</label>
+
+<textarea
+    id="mnQuestion"
+    class="module-textarea"
+    placeholder="Paste question or write what went wrong..."
+    required
+></textarea>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+My Answer
+</label>
+
+<input
+    id="mnMyAnswer"
+    class="module-input"
+    placeholder="What did I answer?"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Correct Answer
+</label>
+
+<input
+    id="mnCorrectAnswer"
+    class="module-input"
+    placeholder="Correct answer"
+>
+
+</div>
+
+
+<div class="full">
+
+<label class="module-label">
+Correct Concept
+</label>
+
+<textarea
+    id="mnConcept"
+    class="module-textarea"
+    placeholder="Concept/rule I should remember..."
+></textarea>
+
+</div>
+
+
+<div class="full">
+
+<label class="module-label">
+Exam Trap / Why I got it wrong
+</label>
+
+<textarea
+    id="mnTrap"
+    class="module-textarea"
+    placeholder="Exact trap, confusion or shortcut..."
+></textarea>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Review Date
+</label>
+
+<input
+    id="mnReviewDate"
+    class="module-input"
+    type="date"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Status
+</label>
+
+<select
+    id="mnStatus"
+    class="module-select"
+>
+
+<option>Weak</option>
+<option>Needs Revision</option>
+<option>Concept Error</option>
+<option>Practice Needed</option>
+
+</select>
+
+</div>
+
+
+<div class="full">
+
+<button
+    type="submit"
+    class="module-btn primary"
+>
++ Save Mistake
+</button>
+
+</div>
+
+
+</form>
+
+</section>
+
+
+<section class="module-grid">
+
+<div class="module-card">
+<p>Open Mistakes</p>
+<h2 id="mnOpen">0</h2>
+</div>
+
+<div class="module-card">
+<p>Reviewed</p>
+<h2 id="mnReviewed">0</h2>
+</div>
+
+<div class="module-card">
+<p>Total Mistakes</p>
+<h2 id="mnTotal">0</h2>
+</div>
+
+<div class="module-card">
+<p>Resolved</p>
+<h2 id="mnResolved">0</h2>
+</div>
+
+</section>
+
+
+<section class="module-panel">
+
+<div class="panel-header">
+
+<div>
+
+<h3>
+Mistake Log
+</h3>
+
+<p>
+Revise your errors instead of repeating them.
+</p>
+
+</div>
+
+</div>
+
+<div id="mnList"></div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="protected.js"></script>
+<script src="module-common.js"></script>
+<script src="mistakes.js"></script>
+
+</body>
+</html>

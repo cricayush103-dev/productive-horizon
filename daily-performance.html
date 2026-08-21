@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1.0"
+>
+
+<title>
+Daily Performance | Productive Horizon
+</title>
+
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+
+<link
+    rel="stylesheet"
+    href="modules.css"
+>
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
+
+<style>
+
+.daily-date-bar{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:18px;
+}
+
+.daily-date-bar input{
+    max-width:220px;
+}
+
+.daily-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:14px;
+    margin-bottom:18px;
+}
+
+.daily-card{
+    padding:18px;
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:var(--card);
+}
+
+.daily-card p{
+    font-size:12px;
+    color:var(--secondary);
+    margin-bottom:6px;
+}
+
+.daily-card h2{
+    font-size:26px;
+}
+
+.daily-card span{
+    display:block;
+    margin-top:5px;
+    font-size:11px;
+    color:var(--secondary);
+}
+
+.daily-progress-track{
+    width:100%;
+    height:12px;
+    margin-top:10px;
+    border-radius:20px;
+    overflow:hidden;
+    background:var(--background);
+}
+
+.daily-progress-fill{
+    height:100%;
+    width:0%;
+    border-radius:20px;
+    background:currentColor;
+}
+
+.daily-chart-box{
+    height:340px;
+    margin-top:15px;
+}
+
+.daily-subject-row{
+    display:grid;
+    grid-template-columns:minmax(150px,1.7fr) 1fr 1fr 1fr;
+    gap:12px;
+    align-items:center;
+    padding:12px 14px;
+    border-bottom:1px solid var(--border);
+}
+
+.daily-subject-row:last-child{
+    border-bottom:none;
+}
+
+.daily-subject-header{
+    font-size:11px;
+    font-weight:700;
+    color:var(--secondary);
+}
+
+.daily-subject-name{
+    font-weight:700;
+}
+
+.daily-positive{
+    color:#16a34a;
+}
+
+.daily-warning{
+    color:#ca8a04;
+}
+
+.daily-danger{
+    color:#dc2626;
+}
+
+.daily-task-row{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto auto;
+    gap:12px;
+    align-items:center;
+    padding:11px 12px;
+    border-bottom:1px solid var(--border);
+}
+
+.daily-task-row:last-child{
+    border-bottom:none;
+}
+
+.daily-task-title{
+    min-width:0;
+}
+
+.daily-task-title strong,
+.daily-task-title span{
+    display:block;
+    overflow-wrap:anywhere;
+}
+
+.daily-task-title span{
+    font-size:11px;
+    color:var(--secondary);
+    margin-top:3px;
+}
+
+@media(max-width:900px){
+
+    .daily-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+}
+
+@media(max-width:650px){
+
+    .daily-grid{
+        grid-template-columns:1fr;
+    }
+
+    .daily-subject-row{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .daily-subject-header{
+        display:none;
+    }
+
+    .daily-task-row{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<div class="logo-icon">
+PH
+</div>
+
+<div>
+<h2>Productive</h2>
+<span>Horizon</span>
+</div>
+
+</div>
+
+
+
+<nav>
+
+<p class="nav-title">
+WORKSPACE
+</p>
+
+<a class="nav-item" href="index.html">
+    <i class="fa-solid fa-chart-pie"></i>
+    Dashboard
+</a>
+
+<a class="nav-item" href="index.html#tasks">
+    <i class="fa-solid fa-list-check"></i>
+    Tasks
+</a>
+
+<a class="nav-item" href="subjects.html">
+    <i class="fa-solid fa-book"></i>
+    Subjects
+</a>
+
+<a class="nav-item" href="planner.html">
+    <i class="fa-solid fa-calendar"></i>
+    Planner
+</a>
+
+<a class="nav-item" href="timer.html">
+    <i class="fa-solid fa-clock"></i>
+    Study Timer
+</a>
+
+
+<p class="nav-title">
+PROGRESS
+</p>
+
+<a class="nav-item" href="analytics.html">
+    <i class="fa-solid fa-chart-line"></i>
+    Analytics
+</a>
+
+<a class="nav-item" href="pyq.html">
+    <i class="fa-solid fa-file-circle-question"></i>
+    PYQ Tracker
+</a>
+
+<a class="nav-item" href="mistakes.html">
+    <i class="fa-solid fa-book-skull"></i>
+    Mistake Notebook
+</a>
+
+<a class="nav-item active" href="daily-performance.html">
+    <i class="fa-solid fa-bullseye"></i>
+    Target vs Actual
+</a>
+
+<a class="nav-item" href="daily-performance.html">
+    <i class="fa-solid fa-bullseye"></i>
+    Target vs Actual
+</a>
+
+<a class="nav-item" href="revisions.html">
+    <i class="fa-solid fa-rotate"></i>
+    Revisions
+</a>
+
+<a class="nav-item" href="weak-topics.html">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    Weak Topics
+</a>
+
+<a class="nav-item" href="journal.html">
+    <i class="fa-solid fa-book-open"></i>
+    Journal
+</a>
+
+</nav>
+<div class="sidebar-bottom">
+
+<a class="nav-item" href="settings.html">
+<i class="fa-solid fa-gear"></i>
+Settings
+</a>
+
+</div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+<header>
+
+<div>
+
+<p class="small-text">
+DAILY EXECUTION
+</p>
+
+<h1>
+Target vs Actual 🎯
+</h1>
+
+<p class="subtitle">
+See exactly what you planned, what you actually studied, and where the day slipped.
+</p>
+
+</div>
+
+<div class="header-actions">
+
+<button
+    id="moduleThemeButton"
+    class="icon-button"
+    type="button"
+>
+🌙
+</button>
+
+</div>
+
+</header>
+
+
+<!-- DATE -->
+
+<section class="module-panel">
+
+<div class="daily-date-bar">
+
+<div>
+
+<label class="module-label">
+Select Date
+</label>
+
+<input
+    id="dailyPerformanceDate"
+    type="date"
+    class="module-input"
+>
+
+</div>
+
+<button
+    id="dailyTodayButton"
+    class="module-btn primary"
+    type="button"
+>
+Today
+</button>
+
+</div>
+
+</section>
+
+
+<!-- SUMMARY -->
+
+<section class="daily-grid">
+
+<div class="daily-card">
+
+<p>
+Planned Study
+</p>
+
+<h2 id="dailyPlanned">
+0h 00m
+</h2>
+
+<span>
+Sum of task planned time
+</span>
+
+</div>
+
+
+<div class="daily-card">
+
+<p>
+Actual Study
+</p>
+
+<h2 id="dailyActual">
+0h 00m
+</h2>
+
+<span id="dailyGoalText">
+From Study Timer
+</span>
+
+</div>
+
+
+<div class="daily-card">
+
+<p>
+Time Achievement
+</p>
+
+<h2 id="dailyAchievement">
+0%
+</h2>
+
+<div class="daily-progress-track">
+<div
+    id="dailyAchievementBar"
+    class="daily-progress-fill"
+></div>
+</div>
+
+</div>
+
+
+<div class="daily-card">
+
+<p>
+Tasks Completed
+</p>
+
+<h2 id="dailyTasks">
+0 / 0
+</h2>
+
+<span id="dailyTaskPercent">
+0%
+</span>
+
+</div>
+
+</section>
+
+
+<!-- VERDICT -->
+
+<section class="module-panel">
+
+<div class="panel-header">
+
+<div>
+
+<h3>
+Daily Execution Verdict
+</h3>
+
+<p>
+Based on planned vs actual study and task completion.
+</p>
+
+</div>
+
+</div>
+
+<h2 id="dailyVerdict">
+No data yet
+</h2>
+
+<p id="dailyVerdictDetail">
+Add tasks or study sessions to start analysis.
+</p>
+
+</section>
+
+
+<!-- BAR GRAPH -->
+
+<section class="module-panel">
+
+<div class="panel-header">
+
+<div>
+
+<h3>
+Subject-wise Planned vs Actual
+</h3>
+
+<p>
+Building-style comparison for the selected day.
+</p>
+
+</div>
+
+</div>
+
+<div class="daily-chart-box">
+<canvas id="dailyPerformanceChart"></canvas>
+</div>
+
+</section>
+
+
+<!-- SUBJECT BREAKDOWN -->
+
+<section class="module-panel">
+
+<div class="panel-header">
+
+<div>
+
+<h3>
+Subject Breakdown
+</h3>
+
+<p>
+Where your planned time actually went.
+</p>
+
+</div>
+
+</div>
+
+<div id="dailySubjectBreakdown">
+
+<div
+    class="
+        daily-subject-row
+        daily-subject-header
+    "
+>
+<div>Subject</div>
+<div>Planned</div>
+<div>Actual</div>
+<div>Achievement</div>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- TASK BREAKDOWN -->
+
+<section class="module-panel">
+
+<div class="panel-header">
+
+<div>
+
+<h3>
+Task Execution
+</h3>
+
+<p>
+Every task planned for the selected day.
+</p>
+
+</div>
+
+</div>
+
+<div id="dailyTaskList"></div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="supabase.js"></script>
+<script src="protected.js"></script>
+<script src="module-common.js"></script>
+
+<script src="daily-performance.js"></script>
+
+</body>
+</html>

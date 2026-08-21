@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    PYQ Tracker | Productive Horizon
+</title>
+
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+
+<link
+    rel="stylesheet"
+    href="modules.css"
+>
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
+
+
+<style>
+
+/* =====================================================
+   PYQ HISTORY - RESPONSIVE FULL WIDTH
+===================================================== */
+
+#pyqHistory {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+#pyqHistory .module-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 14px;
+
+    width: 100%;
+    min-width: 0;
+
+    align-items: center;
+
+    padding: 14px 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: var(--card);
+}
+
+#pyqHistory .module-row-main {
+    width: 100%;
+    min-width: 0;
+}
+
+#pyqHistory .module-row-main strong,
+#pyqHistory .module-row-main span {
+    display: block;
+    width: 100%;
+
+    overflow-wrap: anywhere;
+}
+
+#pyqHistory .status-pill {
+    white-space: nowrap;
+}
+
+#pyqHistory .module-btn {
+    flex-shrink: 0;
+}
+
+@media (max-width: 750px) {
+
+    #pyqHistory .module-row {
+        grid-template-columns: 1fr;
+    }
+
+    #pyqHistory .status-pill {
+        width: fit-content;
+    }
+
+    #pyqHistory .module-btn {
+        width: fit-content;
+    }
+}
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- ================================================
+SIDEBAR
+================================================ -->
+
+<aside class="sidebar">
+
+
+<div class="logo">
+
+<div class="logo-icon">
+PH
+</div>
+
+<div>
+
+<h2>
+Productive
+</h2>
+
+<span>
+Horizon
+</span>
+
+</div>
+
+</div>
+
+
+<nav>
+
+<p class="nav-title">
+WORKSPACE
+</p>
+
+<a class="nav-item" href="index.html">
+    <i class="fa-solid fa-chart-pie"></i>
+    Dashboard
+</a>
+
+<a class="nav-item" href="index.html#tasks">
+    <i class="fa-solid fa-list-check"></i>
+    Tasks
+</a>
+
+<a class="nav-item" href="subjects.html">
+    <i class="fa-solid fa-book"></i>
+    Subjects
+</a>
+
+<a class="nav-item" href="planner.html">
+    <i class="fa-solid fa-calendar"></i>
+    Planner
+</a>
+
+<a class="nav-item" href="timer.html">
+    <i class="fa-solid fa-clock"></i>
+    Study Timer
+</a>
+
+
+<p class="nav-title">
+PROGRESS
+</p>
+
+<a class="nav-item" href="analytics.html">
+    <i class="fa-solid fa-chart-line"></i>
+    Analytics
+</a>
+
+<a class="nav-item active" href="pyq.html">
+    <i class="fa-solid fa-file-circle-question"></i>
+    PYQ Tracker
+</a>
+
+<a class="nav-item" href="mistakes.html">
+    <i class="fa-solid fa-book-skull"></i>
+    Mistake Notebook
+</a>
+
+<a class="nav-item" href="mocks.html">
+    <i class="fa-solid fa-chart-column"></i>
+    Mock Performance
+</a>
+
+<a class="nav-item" href="daily-performance.html">
+    <i class="fa-solid fa-bullseye"></i>
+    Target vs Actual
+</a>
+
+<a class="nav-item" href="revisions.html">
+    <i class="fa-solid fa-rotate"></i>
+    Revisions
+</a>
+
+<a class="nav-item" href="weak-topics.html">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    Weak Topics
+</a>
+
+<a class="nav-item" href="journal.html">
+    <i class="fa-solid fa-book-open"></i>
+    Journal
+</a>
+
+</nav>
+
+
+<div class="sidebar-bottom">
+
+<a
+    href="settings.html"
+    class="nav-item"
+>
+
+<i class="fa-solid fa-gear"></i>
+
+Settings
+
+</a>
+
+</div>
+
+
+</aside>
+
+
+<!-- ================================================
+MAIN
+================================================ -->
+
+<main class="main">
+
+
+<header>
+
+<div>
+
+<p class="small-text">
+QUESTION PERFORMANCE
+</p>
+
+<h1>
+PYQ Tracker 🎯
+</h1>
+
+<p class="subtitle">
+Track topic-wise PYQ performance and automatically detect weak areas.
+</p>
+
+</div>
+
+
+<div class="header-actions">
+
+<button
+    id="moduleThemeButton"
+    class="icon-button"
+    type="button"
+>
+🌙
+</button>
+
+</div>
+
+</header>
+
+
+<!-- ================================================
+FORM
+================================================ -->
+
+<section class="module-panel">
+
+
+<form
+    id="pyqForm"
+    class="module-form-grid"
+>
+
+
+<div>
+
+<label class="module-label">
+Subject
+</label>
+
+<select
+    id="pyqSubject"
+    class="module-select"
+    required
+></select>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Topic
+</label>
+
+<select
+    id="pyqTopic"
+    class="module-select"
+    required
+></select>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Practice Date
+</label>
+
+<input
+    id="pyqDate"
+    class="module-input"
+    type="date"
+    required
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Source
+</label>
+
+<select
+    id="pyqSource"
+    class="module-select"
+>
+
+<option>
+PYQ
+</option>
+
+<option>
+Practice Set
+</option>
+
+<option>
+Book
+</option>
+
+<option>
+Mock
+</option>
+
+<option>
+Class Test
+</option>
+
+<option>
+Other
+</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Attempted
+</label>
+
+<input
+    id="pyqAttempted"
+    class="module-input"
+    type="number"
+    min="0"
+    value="20"
+    required
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Correct
+</label>
+
+<input
+    id="pyqCorrect"
+    class="module-input"
+    type="number"
+    min="0"
+    value="0"
+    required
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Wrong
+</label>
+
+<input
+    id="pyqWrong"
+    class="module-input"
+    type="number"
+    min="0"
+    value="0"
+    required
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+Skipped
+</label>
+
+<input
+    id="pyqSkipped"
+    class="module-input"
+    type="number"
+    min="0"
+    value="0"
+>
+
+</div>
+
+
+<div class="full">
+
+<label class="module-label">
+Notes
+</label>
+
+<textarea
+    id="pyqNotes"
+    class="module-textarea"
+    placeholder="What went wrong? Any pattern or trap?"
+></textarea>
+
+</div>
+
+
+<div class="full">
+
+<div
+    id="pyqPreview"
+    class="pyq-score-preview"
+>
+
+Accuracy:
+<strong>
+0%
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="full">
+
+<button
+    class="module-btn primary"
+    type="submit"
+>
+
++ Save PYQ Result
+
+</button>
+
+</div>
+
+
+</form>
+
+
+</section>
+
+
+<!-- ================================================
+STATS
+================================================ -->
+
+<section class="module-grid">
+
+
+<div class="module-card">
+
+<p>
+Total Attempted
+</p>
+
+<h2 id="pyqTotalAttempted">
+0
+</h2>
+
+</div>
+
+
+<div class="module-card">
+
+<p>
+Correct
+</p>
+
+<h2 id="pyqTotalCorrect">
+0
+</h2>
+
+</div>
+
+
+<div class="module-card">
+
+<p>
+Overall Accuracy
+</p>
+
+<h2 id="pyqAccuracy">
+0%
+</h2>
+
+</div>
+
+
+<div class="module-card">
+
+<p>
+Practice Sessions
+</p>
+
+<h2 id="pyqSessions">
+0
+</h2>
+
+</div>
+
+
+</section>
+
+
+<!-- ================================================
+HISTORY
+================================================ -->
+
+<section class="module-panel">
+
+
+<div class="panel-header">
+
+<div>
+
+<h3>
+PYQ Practice History
+</h3>
+
+<p>
+Latest topic-wise performance
+</p>
+
+</div>
+
+</div>
+
+
+<div id="pyqHistory"></div>
+
+
+</section>
+
+
+</main>
+
+
+</div>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+<script src="supabase.js"></script>
+
+<script src="protected.js"></script>
+
+<script src="module-common.js"></script>
+
+<script src="pyq.js"></script>
+
+
+</body>
+
+</html>

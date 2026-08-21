@@ -1,62 +1,438 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
-<title>Revisions | Productive Horizon</title>
-<link href="style.css" rel="stylesheet"/>
-<link href="modules.css" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
+
+<meta charset="utf-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1.0"
+>
+
+<title>
+    Revisions | Productive Horizon
+</title>
+
+<link
+    href="style.css"
+    rel="stylesheet"
+>
+
+<link
+    href="modules.css"
+    rel="stylesheet"
+>
+
+<link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    rel="stylesheet"
+>
+
+<style>
+
+/* =====================================================
+   REVISION QUEUE - RESPONSIVE FULL WIDTH
+===================================================== */
+
+#revisionList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+#revisionList .module-row {
+    display: grid;
+    grid-template-columns: 26px minmax(0, 1fr) auto auto;
+    gap: 14px;
+
+    width: 100%;
+    min-width: 0;
+
+    align-items: center;
+
+    padding: 14px 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: var(--card);
+}
+
+#revisionList .module-row-main {
+    width: 100%;
+    min-width: 0;
+}
+
+#revisionList .module-row-main strong,
+#revisionList .module-row-main span {
+    display: block;
+    width: 100%;
+
+    overflow-wrap: anywhere;
+}
+
+#revisionList .status-pill {
+    white-space: nowrap;
+}
+
+@media (max-width: 750px) {
+
+    #revisionList .module-row {
+        grid-template-columns: 26px minmax(0, 1fr);
+    }
+
+    #revisionList .status-pill,
+    #revisionList .module-btn {
+        grid-column: 2;
+        width: fit-content;
+    }
+}
+</style>
+
 </head>
+
+
 <body>
+
 <div class="app">
+
+
 <aside class="sidebar">
-<div class="logo"><div class="logo-icon">PH</div><div><h2>Productive</h2><span>Horizon</span></div></div>
+
+<div class="logo">
+
+    <div class="logo-icon">
+        PH
+    </div>
+
+    <div>
+        <h2>Productive</h2>
+        <span>Horizon</span>
+    </div>
+
+</div>
+
+
 <nav>
-<p class="nav-title">WORKSPACE</p>
-<a class="nav-item" href="index.html"><i class="fa-solid fa-chart-pie"></i>Dashboard</a>
-<a class="nav-item" href="index.html#tasks"><i class="fa-solid fa-list-check"></i>Tasks</a>
-<a class="nav-item" href="subjects.html"><i class="fa-solid fa-book"></i>Subjects</a>
-<a class="nav-item" href="planner.html"><i class="fa-solid fa-calendar"></i>Planner</a>
-<a class="nav-item" href="timer.html"><i class="fa-solid fa-clock"></i>Study Timer</a>
-<p class="nav-title">PROGRESS</p>
-<a class="nav-item" href="analytics.html"><i class="fa-solid fa-chart-line"></i>Analytics</a>
-<a class="nav-item active" href="revisions.html"><i class="fa-solid fa-rotate"></i>Revisions</a>
-<a class="nav-item" href="weak-topics.html"><i class="fa-solid fa-triangle-exclamation"></i>Weak Topics</a>
-<a class="nav-item" href="journal.html"><i class="fa-solid fa-book-open"></i>Journal</a>
+
+<p class="nav-title">
+WORKSPACE
+</p>
+
+<a class="nav-item" href="index.html">
+    <i class="fa-solid fa-chart-pie"></i>
+    Dashboard
+</a>
+
+<a class="nav-item" href="index.html#tasks">
+    <i class="fa-solid fa-list-check"></i>
+    Tasks
+</a>
+
+<a class="nav-item" href="subjects.html">
+    <i class="fa-solid fa-book"></i>
+    Subjects
+</a>
+
+<a class="nav-item" href="planner.html">
+    <i class="fa-solid fa-calendar"></i>
+    Planner
+</a>
+
+<a class="nav-item" href="timer.html">
+    <i class="fa-solid fa-clock"></i>
+    Study Timer
+</a>
+
+
+<p class="nav-title">
+PROGRESS
+</p>
+
+<a class="nav-item" href="analytics.html">
+    <i class="fa-solid fa-chart-line"></i>
+    Analytics
+</a>
+
+<a class="nav-item" href="pyq.html">
+    <i class="fa-solid fa-file-circle-question"></i>
+    PYQ Tracker
+</a>
+
+<a class="nav-item" href="mistakes.html">
+    <i class="fa-solid fa-book-skull"></i>
+    Mistake Notebook
+</a>
+
+<a class="nav-item" href="mocks.html">
+    <i class="fa-solid fa-chart-column"></i>
+    Mock Performance
+</a>
+
+<a class="nav-item" href="daily-performance.html">
+    <i class="fa-solid fa-bullseye"></i>
+    Target vs Actual
+</a>
+
+<a class="nav-item active" href="revisions.html">
+    <i class="fa-solid fa-rotate"></i>
+    Revisions
+</a>
+
+<a class="nav-item" href="weak-topics.html">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    Weak Topics
+</a>
+
+<a class="nav-item" href="journal.html">
+    <i class="fa-solid fa-book-open"></i>
+    Journal
+</a>
+
 </nav>
+
+
 <div class="sidebar-bottom">
-<a class="nav-item" href="settings.html"><i class="fa-solid fa-gear"></i>Settings</a>
+
+<a class="nav-item" href="settings.html">
+    <i class="fa-solid fa-gear"></i>
+    Settings
+</a>
+
 </div>
+
 </aside>
+
+
 <main class="main">
+
+
 <header>
-<div><p class="small-text">REVISION SYSTEM</p><h1>Revisions 🔄</h1><p class="subtitle">Schedule revision cycles and never lose a topic.</p></div>
-<div class="header-actions"><button class="icon-button" id="moduleThemeButton" type="button">🌙</button></div>
-</header>
-<section class="module-panel">
-<form class="module-form-grid" id="revisionForm">
-<div><label class="module-label">Subject</label><select class="module-select" id="revisionSubject" required=""></select></div>
-<div><label class="module-label">Scheduled Date</label><input class="module-input" id="revisionDate" required="" type="date"/></div>
-<div><label class="module-label">Revision Number</label><input class="module-input" id="revisionNumber" min="1" type="number" value="1"/></div>
-<div><label class="module-label">Notes</label><input class="module-input" id="revisionNotes" placeholder="What to revise?"/></div>
-<div class="full"><button class="module-btn primary" type="submit">+ Add Revision</button></div>
-</form>
-</section>
-<section class="module-grid">
-<div class="module-card"><p>Due Today</p><h2 id="rToday">0</h2></div>
-<div class="module-card"><p>Overdue</p><h2 id="rOverdue">0</h2></div>
-<div class="module-card"><p>Upcoming</p><h2 id="rUpcoming">0</h2></div>
-<div class="module-card"><p>Completed</p><h2 id="rCompleted">0</h2></div>
-</section>
-<section class="module-panel"><div class="panel-header"><div><h3>Revision Queue</h3><p>Due and upcoming revisions</p></div></div><div id="revisionList"></div></section>
-</main>
+
+<div>
+
+<p class="small-text">
+    REVISION INTELLIGENCE
+</p>
+
+<h1>
+    Revisions 🔄
+</h1>
+
+<p class="subtitle">
+    Topic-wise spaced revision:
+    1 → 3 → 7 → 15 → 30 days.
+</p>
+
 </div>
+
+
+<div class="header-actions">
+
+<button
+    class="icon-button"
+    id="moduleThemeButton"
+    type="button"
+>
+    🌙
+</button>
+
+</div>
+
+</header>
+
+
+<section class="module-panel">
+
+<form
+    class="module-form-grid"
+    id="revisionForm"
+>
+
+
+<div>
+
+<label class="module-label">
+    Subject
+</label>
+
+<select
+    class="module-select"
+    id="revisionSubject"
+    required
+></select>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+    Topic
+</label>
+
+<select
+    class="module-select"
+    id="revisionTopic"
+    required
+></select>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+    Scheduled Date
+</label>
+
+<input
+    class="module-input"
+    id="revisionDate"
+    required
+    type="date"
+>
+
+</div>
+
+
+<div>
+
+<label class="module-label">
+    Revision Stage
+</label>
+
+<select
+    class="module-select"
+    id="revisionStage"
+>
+
+<option value="1">
+    Revision 1 (+1 day)
+</option>
+
+<option value="2">
+    Revision 2 (+3 days)
+</option>
+
+<option value="3">
+    Revision 3 (+7 days)
+</option>
+
+<option value="4">
+    Revision 4 (+15 days)
+</option>
+
+<option value="5">
+    Revision 5 (+30 days)
+</option>
+
+</select>
+
+</div>
+
+
+<div class="full">
+
+<label class="module-label">
+    Notes
+</label>
+
+<input
+    class="module-input"
+    id="revisionNotes"
+    placeholder="What to revise?"
+>
+
+</div>
+
+
+<div class="full">
+
+<button
+    class="module-btn primary"
+    type="submit"
+>
+    + Add Revision
+</button>
+
+<p class="revision-form-note">
+    Completing a revision automatically schedules the next stage.
+</p>
+
+</div>
+
+
+</form>
+
+</section>
+
+
+<section class="module-grid">
+
+<div class="module-card">
+<p>Due Today</p>
+<h2 id="rToday">0</h2>
+</div>
+
+<div class="module-card">
+<p>Overdue</p>
+<h2 id="rOverdue">0</h2>
+</div>
+
+<div class="module-card">
+<p>Upcoming</p>
+<h2 id="rUpcoming">0</h2>
+</div>
+
+<div class="module-card">
+<p>Completed</p>
+<h2 id="rCompleted">0</h2>
+</div>
+
+</section>
+
+
+<section class="module-panel">
+
+<div class="panel-header">
+
+<div>
+
+<h3>
+    Revision Queue
+</h3>
+
+<p>
+    Topic-wise due and upcoming revisions
+</p>
+
+</div>
+
+</div>
+
+
+<div id="revisionList"></div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script src="supabase.js"></script>
 <script src="protected.js"></script>
 <script src="module-common.js"></script>
 <script src="revisions.js"></script>
+
+
 </body>
+
 </html>
