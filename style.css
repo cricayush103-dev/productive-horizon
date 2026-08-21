@@ -1341,3 +1341,28 @@ select {
 .sidebar {
     scrollbar-width: thin;
 }
+/* =====================================================
+   FIX EXTRA VERTICAL SPACE / CONTENT CENTERING
+===================================================== */
+
+.main {
+    min-height: 100vh !important;
+    height: auto !important;
+
+    display: block !important;
+
+    padding-top: 32px !important;
+
+    overflow: visible !important;
+}
+
+/* Main content should always start from top */
+.app {
+    align-items: flex-start !important;
+}
+
+/* Timer page must not vertically center content */
+.main > header {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
