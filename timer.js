@@ -14,6 +14,7 @@ const $ = id =>
 let timerUser = null;
 
 let subjects = [];
+let timerTasks = [];
 
 let savedTodayMinutes = 0;
 
@@ -28,6 +29,7 @@ let timerState = {
     type: "Stopwatch",
 
     subjectId: "",
+    taskId: "",
 
     startedAt: null,
 
@@ -369,27 +371,40 @@ function renderTimer() {
     }
 
 
-    // =========================================
-    // SUBJECT CARD
-    // =========================================
+// =========================================
+// SELECTED FOCUS CARD
+// =========================================
 
-    const selectedSubject =
-        subjects.find(
-            subject =>
-                subject.id ===
-                $("timerSubject")
-                    .value
-        );
+const selectedTask =
+    timerTasks.find(
+        task =>
+            task.id ===
+            $("timerTask").value
+    );
 
 
-    $("subjectCard")
-        .textContent =
+const selectedSubject =
+    subjects.find(
+        subject =>
+            subject.id ===
+            $("timerSubject").value
+    );
+
+
+$("subjectCard")
+    .textContent =
+
+    selectedTask
+        ?
+        selectedTask.title
+
+        :
+
         selectedSubject
             ?
             selectedSubject.name
             :
             "—";
-
 
     // =========================================
     // DAILY PROGRESS
@@ -738,8 +753,20 @@ $("timerSubject")
         function () {
 
             timerState.subjectId =
-                $("timerSubject")
-                    .value;
+                $("timerSubject").value;
+
+
+            /*
+                Manual subject selection means
+                user is studying by subject,
+                not by a specific task.
+            */
+
+            $("timerTask").value =
+                "";
+
+            timerState.taskId =
+                "";
 
 
             saveTimerState();
@@ -748,7 +775,64 @@ $("timerSubject")
 
         }
     );
+// =====================================================
+// TASK CHANGE
+// =====================================================
 
+$("timerTask")
+    .addEventListener(
+        "change",
+        function () {
+
+            const taskId =
+                $("timerTask").value;
+
+
+            timerState.taskId =
+                taskId;
+
+
+            if (
+                taskId
+            ) {
+
+                const selectedTask =
+                    timerTasks.find(
+                        task =>
+                            task.id ===
+                            taskId
+                    );
+
+
+                /*
+                    Task selected:
+                    automatically select its subject.
+                */
+
+                if (
+                    selectedTask
+                    &&
+                    selectedTask.subject_id
+                ) {
+
+                    $("timerSubject").value =
+                        selectedTask.subject_id;
+
+
+                    timerState.subjectId =
+                        selectedTask.subject_id;
+
+                }
+
+            }
+
+
+            saveTimerState();
+
+            renderTimer();
+
+        }
+    );
 
 // =====================================================
 // SETTINGS CHANGE
@@ -815,7 +899,87 @@ $("timerNotes")
         }
     );
 
+// =====================================================
+// LOAD TODAY'S TASKS
+// =====================================================
 
+async function loadTimerTasks() {
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("tasks")
+        .select(
+            "id,title,subject_id,status,priority,task_date"
+        )
+        .eq(
+            "user_id",
+            timerUser
+        )
+        .eq(
+            "task_date",
+            phLocalDate()
+        )
+        .order(
+            "created_at",
+            {
+                ascending: true
+            }
+        );
+
+
+    if (error) {
+
+        console.error(
+            "Could not load timer tasks:",
+            error
+        );
+
+        return;
+    }
+
+
+    timerTasks =
+        data || [];
+
+
+    $("timerTask").innerHTML =
+
+        `<option value="">
+            Select Today's Task (Optional)
+        </option>`
+
+        +
+
+        timerTasks
+            .map(
+                task => {
+
+                    const done =
+                        task.status ===
+                        "Completed"
+                            ?
+                            "✅ "
+                            :
+                            "";
+
+                    return `
+
+                    <option value="${task.id}">
+
+                        ${done}${phEscape(task.title)}
+
+                    </option>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+}
 // =====================================================
 // SAVE SESSION
 // =====================================================
@@ -825,7 +989,10 @@ async function saveSession() {
     const subjectId =
         $("timerSubject")
             .value;
-
+const taskId =
+    $("timerTask").value
+    ||
+    null;
 
     if (!subjectId) {
 
@@ -906,7 +1073,8 @@ async function saveSession() {
 
             subject_id:
                 subjectId,
-
+task_id:
+    taskId,
             session_date:
                 phLocalDate(),
 
@@ -1285,7 +1453,19 @@ function restoreTimerUI() {
             timerState.subjectId;
 
     }
+if (
+    timerState.taskId &&
+    timerTasks.some(
+        task =>
+            task.id ===
+            timerState.taskId
+    )
+) {
 
+    $("timerTask").value =
+        timerState.taskId;
+
+}
 
     renderTimer();
 
@@ -1380,7 +1560,7 @@ window.addEventListener(
                     `
             )
             .join("");
-
+await loadTimerTasks();
 
     // Restore active timer FIRST
     loadTimerState();
