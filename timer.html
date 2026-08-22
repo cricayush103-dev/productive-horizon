@@ -103,15 +103,59 @@ PROGRESS
 <div class="module-card"><p>Study Today</p><h2 id="todayMinutes">0m</h2><span class="muted">Saved sessions</span></div>
 <div class="module-card"><p>Sessions Today</p><h2 id="todaySessions">0</h2><span class="muted">Completed sessions</span></div>
 <div class="module-card"><p>Current Mode</p><h2 id="modeCard">Stopwatch</h2><span class="muted">Switch anytime</span></div>
-<div class="module-card"><p>Selected Subject</p><h2 id="subjectCard">—</h2><span class="muted">Session subject</span></div>
+<div class="module-card">
+    <p>Selected Focus</p>
+    <h2 id="subjectCard">—</h2>
+    <span class="muted">Task or subject</span>
+</div>
 </section>
 <section class="module-panel timer-shell">
-<div class="module-toolbar" style="justify-content:center">
-<select class="module-select" id="timerSubject" style="max-width:320px"></select>
-<select class="module-select" id="timerType" style="max-width:220px">
-<option value="Stopwatch">Stopwatch</option>
-<option value="Pomodoro">Pomodoro</option>
+<div
+    class="module-toolbar"
+    style="
+        justify-content:center;
+        gap:12px;
+        flex-wrap:wrap;
+    "
+>
+
+<select
+    class="module-select"
+    id="timerSubject"
+    style="max-width:300px"
+>
 </select>
+
+
+<select
+    class="module-select"
+    id="timerTask"
+    style="max-width:360px"
+>
+
+<option value="">
+    Select Today's Task (Optional)
+</option>
+
+</select>
+
+
+<select
+    class="module-select"
+    id="timerType"
+    style="max-width:200px"
+>
+
+<option value="Stopwatch">
+Stopwatch
+</option>
+
+<option value="Pomodoro">
+Pomodoro
+</option>
+
+</select>
+
 </div>
 <div class="timer-mode" id="timerModeLabel">STOPWATCH</div>
 <div class="timer-display" id="timerDisplay">00:00:00</div>
